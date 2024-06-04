@@ -1,6 +1,11 @@
 import ListingPage from "@/app/collection/[chainId]/[contractAddress]/token/[tokenId]/page";
 import { NFT_CONTRACTS } from "@/consts/nft_contracts";
 
+/**
+ * This is the slug page. It behaves exactly like /collection/[chainId]/[contractAddress]/token/[tokenId]
+ * however the url is nicer your-marketplace.com/<collection-slug>/<tokenId>
+ */
+
 export default function CollectionSlugPage({
 	params,
 }: { params: { collectionSlug: string; tokenId: string } }) {
