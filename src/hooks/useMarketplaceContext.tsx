@@ -3,6 +3,7 @@
 import { client } from "@/consts/client";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { NFT_CONTRACTS } from "@/consts/nft_contracts";
+import { Box, Spinner } from "@chakra-ui/react";
 import { createContext, type ReactNode, useContext } from "react";
 import { getContract, type ThirdwebContract } from "thirdweb";
 import { getContractMetadata } from "thirdweb/extensions/common";
@@ -39,6 +40,7 @@ type TMarketplaceContext = {
     | undefined;
   refetchAllListings: Function;
   isRefetchingAllListings: boolean;
+  listingsInSelectedCollection: DirectListing[];
 };
 
 const MarketplaceContext = createContext<TMarketplaceContext | undefined>(
@@ -126,6 +128,14 @@ export default function MarketplaceProvider({
     },
   });
 
+  const listingsInSelectedCollection = allValidListings?.length
+    ? allValidListings.filter(
+        (item) =>
+          item.assetContractAddress.toLowerCase() ===
+          contract.address.toLowerCase()
+      )
+    : [];
+
   const { data: allAuctions, isLoading: isLoadingAuctions } = useReadContract(
     getAllAuctions,
     {
@@ -153,9 +163,23 @@ export default function MarketplaceProvider({
         contractMetadata,
         refetchAllListings,
         isRefetchingAllListings,
+        listingsInSelectedCollection,
       }}
     >
       {children}
+      {isLoading && (
+        <Box
+          position="fixed"
+          bottom="10px"
+          right="10px"
+          backgroundColor="rgba(0, 0, 0, 0.7)"
+          padding="10px"
+          borderRadius="md"
+          zIndex={1000}
+        >
+          <Spinner size="lg" color="purple" />
+        </Box>
+      )}
     </MarketplaceContext.Provider>
   );
 }

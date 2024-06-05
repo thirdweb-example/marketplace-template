@@ -50,13 +50,11 @@ export function Token(props: Props) {
   const {
     type,
     nftContract,
-    marketplaceContract,
     allAuctions,
-    allValidListings,
     isLoading,
     contractMetadata,
-    refetchAllListings,
     isRefetchingAllListings,
+    listingsInSelectedCollection,
   } = useMarketplaceContext();
   const { tokenId } = props;
   const account = useActiveAccount();
@@ -70,7 +68,7 @@ export function Token(props: Props) {
     }
   );
 
-  const listings = (allValidListings || []).filter(
+  const listings = (listingsInSelectedCollection || []).filter(
     (item) =>
       item.assetContractAddress.toLowerCase() ===
         nftContract.address.toLowerCase() && item.asset.id === BigInt(tokenId)

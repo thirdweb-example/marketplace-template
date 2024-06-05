@@ -3,10 +3,12 @@ import {
   Flex,
   Heading,
   Img,
+  SimpleGrid,
   Tab,
   TabList,
   Tabs,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { blo } from "blo";
 import { shortenAddress } from "thirdweb/utils";
@@ -80,9 +82,10 @@ export function ProfileSection(props: Props) {
           item.creatorAddress.toLowerCase() === account.address.toLowerCase()
       )
     : [];
+  const columns = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 2, xl: 4 });
   return (
-    <Box px={{ lg: "100px", base: "20px" }}>
-      <Flex direction={{ lg: "row", md: "row", sm: "column" }} gap={5}>
+    <Box px={{ lg: "50px", base: "20px" }}>
+      <Flex direction={{ lg: "row", md: "column", sm: "column" }} gap={5}>
         <Img
           src={blo(account.address as `0x${string}`)}
           w={{ lg: 150, base: 100 }}
@@ -119,69 +122,63 @@ export function ProfileSection(props: Props) {
                   {/* <Tab>Auctions ({allAuctions?.length || 0})</Tab> */}
                 </TabList>
               </Tabs>
-              {tabIndex === 0 ? (
-                <>
-                  {data && data.length > 0 ? (
-                    <Flex
-                      direction="row"
-                      wrap="wrap"
-                      gap="3"
-                      justifyContent="space-evenly"
-                    >
-                      {data?.map((item) => (
-                        <OwnedItem
-                          key={item.id.toString()}
-                          nftCollection={contract}
-                          nft={item}
-                        />
-                      ))}
-                    </Flex>
-                  ) : (
-                    <Box>You do not own any NFT in this collection</Box>
-                  )}
-                </>
-              ) : (
-                <>
-                  {listings && listings.length > 0 ? (
-                    <Flex
-                      direction="row"
-                      wrap="wrap"
-                      gap="3"
-                      justifyContent="space-evenly"
-                    >
-                      {listings?.map((item) => (
-                        <Box
-                          key={item.id}
-                          rounded="12px"
-                          as={Link}
-                          href={`/collection/${contract.chain.id}/${
-                            contract.address
-                          }/token/${item.asset.id.toString()}`}
-                          _hover={{ textDecoration: "none" }}
-                          w={250}
-                        >
-                          <Flex direction="column">
-                            <MediaRenderer
-                              client={client}
-                              src={item.asset.metadata.image}
-                            />
-                            <Text mt="12px">
-                              {item.asset?.metadata?.name ?? "Unknown item"}
-                            </Text>
-                            <Text>Price</Text>
-                            <Text>
-                              {toEther(item.pricePerToken)}{" "}
-                              {item.currencyValuePerToken.symbol}
-                            </Text>
-                          </Flex>
-                        </Box>
-                      ))}
-                    </Flex>
-                  ) : (
-                    <Box>You do not have any listing with this collection</Box>
-                  )}
-                </>
-              )}
+              <SimpleGrid columns={columns} spacing={4} p={4}>
+                {tabIndex === 0 ? (
+                  <>
+                    {data && data.length > 0 ? (
+                      <>
+                        {data?.map((item) => (
+                          <OwnedItem
+                            key={item.id.toString()}
+                            nftCollection={contract}
+                            nft={item}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <Box>You do not own any NFT in this collection</Box>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {listings && listings.length > 0 ? (
+                      <>
+                        {listings?.map((item) => (
+                          <Box
+                            key={item.id}
+                            rounded="12px"
+                            as={Link}
+                            href={`/collection/${contract.chain.id}/${
+                              contract.address
+                            }/token/${item.asset.id.toString()}`}
+                            _hover={{ textDecoration: "none" }}
+                            w={250}
+                          >
+                            <Flex direction="column">
+                              <MediaRenderer
+                                client={client}
+                                src={item.asset.metadata.image}
+                              />
+                              <Text mt="12px">
+                                {item.asset?.metadata?.name ?? "Unknown item"}
+                              </Text>
+                              <Text>Price</Text>
+                              <Text>
+                                {toEther(item.pricePerToken)}{" "}
+                                {item.currencyValuePerToken.symbol}
+                              </Text>
+                            </Flex>
+                          </Box>
+                        ))}
+                      </>
+                    ) : (
+                      <Box>
+                        You do not have any listing with this collection
+                      </Box>
+                    )}
+                  </>
+                )}
+              </SimpleGrid>
             </Box>
           </>
         )}
