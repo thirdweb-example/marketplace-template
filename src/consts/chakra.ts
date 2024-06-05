@@ -8,16 +8,33 @@ export const chakraThemeConfig: ThemeConfig = {
 
 export const chakraTheme = extendTheme({
   config: chakraThemeConfig,
-  styles: {
-    global: (props: any) => ({
-      body: {
-        bg: mode("white", "gray.800")(props),
-        color: mode("gray.800", "white")(props),
-      },
-    }),
-  },
+
+  /**
+   * Hard-coding some default style to "white"
+   * TODO: change to dynamic theming
+   */
   components: {
     Text: {
+      baseStyle: (props: any) => ({
+        color: "white",
+      }),
+    },
+    Heading: {
+      baseStyle: (props: any) => ({
+        color: "white",
+      }),
+    },
+    AccordionPanel: {
+      baseStyle: (props: any) => ({
+        color: "white",
+      }),
+    },
+    AccordionButton: {
+      baseStyle: (props: any) => ({
+        color: "white",
+      }),
+    },
+    Td: {
       baseStyle: (props: any) => ({
         color: "white",
       }),
