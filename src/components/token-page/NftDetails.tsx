@@ -18,7 +18,6 @@ type Props = {
 
 export function NftDetails(props: Props) {
   const { type, nftContract } = useMarketplaceContext();
-  console.log({ chain: nftContract.chain.blockExplorers });
   const { nft } = props;
   const contractUrl = `${
     nftContract.chain.blockExplorers

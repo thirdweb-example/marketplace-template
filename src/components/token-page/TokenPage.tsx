@@ -123,6 +123,7 @@ export function Token(props: Props) {
                 )}
 
               {nft && <NftDetails nft={nft} />}
+
             </Accordion>
           </Flex>
           <Box w={{ lg: "45vw", base: "90vw" }}>
@@ -152,7 +153,6 @@ export function Token(props: Props) {
             )}
             <Accordion
               mt="30px"
-              allowToggle
               sx={{ container: {} }}
               defaultIndex={[0]}
               allowMultiple
@@ -169,7 +169,10 @@ export function Token(props: Props) {
                 <AccordionPanel pb={4}>
                   {listings.length > 0 ? (
                     <TableContainer>
-                      <Table variant="simple">
+                      <Table
+                        variant="simple"
+                        sx={{ "th, td": { borderBottom: "none" } }}
+                      >
                         <Thead>
                           <Tr>
                             <Th>Price</Th>

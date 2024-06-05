@@ -46,6 +46,7 @@ export default function RelatedListings({
         >
           {listings?.map((item) => (
             <Box
+              key={item.id.toString()}
               rounded="12px"
               as={Link}
               href={`/collection/${nftContract.chain.id}/${
