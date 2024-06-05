@@ -15,7 +15,7 @@ import { ProfileMenu } from "./Menu";
 import { useState } from "react";
 import { NFT_CONTRACTS, type NftContract } from "@/consts/nft_contracts";
 import { MediaRenderer, useReadContract } from "thirdweb/react";
-import { getContract } from "thirdweb";
+import { getContract, toEther } from "thirdweb";
 import { client } from "@/consts/client";
 import { getOwnedERC721s } from "@/extensions/getOwnedERC721s";
 import { getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -165,12 +165,12 @@ export function ProfileSection(props: Props) {
                               client={client}
                               src={item.asset.metadata.image}
                             />
-                            <Text>
+                            <Text mt="12px">
                               {item.asset?.metadata?.name ?? "Unknown item"}
                             </Text>
                             <Text>Price</Text>
                             <Text>
-                              {item.pricePerToken.toString()}{" "}
+                              {toEther(item.pricePerToken)}{" "}
                               {item.currencyValuePerToken.symbol}
                             </Text>
                           </Flex>

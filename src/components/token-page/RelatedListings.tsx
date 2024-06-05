@@ -10,6 +10,7 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import { toEther } from "thirdweb";
 import { MediaRenderer } from "thirdweb/react";
 
 export default function RelatedListings({
@@ -59,6 +60,11 @@ export default function RelatedListings({
                   src={item.asset.metadata.image}
                 />
                 <Text>{item.asset.metadata?.name ?? "Unknown item"}</Text>
+                <Text>Price</Text>
+                <Text>
+                  {toEther(item.pricePerToken)}{" "}
+                  {item.currencyValuePerToken.symbol}
+                </Text>
               </Flex>
             </Box>
           ))}
