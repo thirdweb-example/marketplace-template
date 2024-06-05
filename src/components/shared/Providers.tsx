@@ -1,7 +1,6 @@
 "use client";
-
-import { chakraTheme } from "@/consts/chakra-theme";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import chakraTheme from "@/consts/chakra-theme";
+import { ChakraProvider } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import { ThirdwebProvider } from "thirdweb/react";
 
