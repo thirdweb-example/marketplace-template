@@ -33,6 +33,7 @@ import { CreateListing } from "./CreateListing";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import dynamic from "next/dynamic";
 import { NftDetails } from "./NftDetails";
+import RelatedListings from "./RelatedListings";
 
 const CancelListingButton = dynamic(() => import("./CancelListingButton"), {
   ssr: false,
@@ -87,7 +88,7 @@ export function Token(props: Props) {
     nft?.owner?.toLowerCase() === account?.address.toLowerCase();
 
   return (
-    <Flex>
+    <Flex direction="column">
       <Box mt="24px" mx="auto">
         <Flex
           direction={{ lg: "row", base: "column" }}
@@ -156,12 +157,13 @@ export function Token(props: Props) {
               allowToggle
               sx={{ container: {} }}
               defaultIndex={[0]}
+              allowMultiple
             >
               <AccordionItem>
                 <Text>
                   <AccordionButton>
                     <Box as="span" flex="1" textAlign="left">
-                      Listings
+                      Listings ({listings.length})
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
@@ -231,6 +233,8 @@ export function Token(props: Props) {
                   )}
                 </AccordionPanel>
               </AccordionItem>
+
+              <RelatedListings excludedListingId={listings[0]?.id ?? -1n} />
             </Accordion>
           </Box>
         </Flex>

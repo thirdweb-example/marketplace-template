@@ -1,6 +1,6 @@
 "use client";
 
-import { Token } from "@/components/token-page/Token";
+import { Token } from "@/components/token-page/TokenPage";
 
 export default function ListingPage({
   params,
