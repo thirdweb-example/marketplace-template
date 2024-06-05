@@ -1,24 +1,27 @@
+import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { useRef } from "react";
-import {
-  NATIVE_TOKEN_ADDRESS,
-  sendAndConfirmTransaction,
-  type ThirdwebContract,
-} from "thirdweb";
+import { NATIVE_TOKEN_ADDRESS, sendAndConfirmTransaction } from "thirdweb";
 import { createListing } from "thirdweb/extensions/marketplace";
+import {
+  useActiveWalletChain,
+  useSwitchActiveWalletChain,
+} from "thirdweb/react";
 import type { Account } from "thirdweb/wallets";
 
 type Props = {
-  nftContract: ThirdwebContract;
-  marketplaceContract: ThirdwebContract;
   tokenId: bigint;
   account: Account;
-  type: "ERC1155" | "ERC721";
 };
 
 export function CreateListing(props: Props) {
   const priceRef = useRef<HTMLInputElement>(null);
-  const { nftContract, marketplaceContract, tokenId, type, account } = props;
+  const { tokenId, account } = props;
+  const switchChain = useSwitchActiveWalletChain();
+  const activeChain = useActiveWalletChain();
+  const { nftContract, marketplaceContract, refetchAllListings, type } =
+    useMarketplaceContext();
+
   return (
     <>
       <br />
@@ -37,7 +40,9 @@ export function CreateListing(props: Props) {
           onClick={async () => {
             const value = priceRef.current?.value;
             if (!value) throw Error("Need to enter a price for this listing");
-            const now = new Date();
+            if (activeChain?.id !== nftContract.chain.id) {
+              await switchChain(nftContract.chain);
+            }
             const transaction = createListing({
               contract: marketplaceContract,
               assetContractAddress: nftContract.address,
@@ -46,10 +51,11 @@ export function CreateListing(props: Props) {
               currencyContractAddress: NATIVE_TOKEN_ADDRESS,
               pricePerToken: value,
             });
-            const receipt = await sendAndConfirmTransaction({
+            await sendAndConfirmTransaction({
               transaction,
               account,
             });
+            refetchAllListings();
           }}
         >
           List

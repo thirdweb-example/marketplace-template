@@ -6,11 +6,8 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
-  Card,
   Flex,
   Heading,
-  Input,
   Link,
   Table,
   TableContainer,
@@ -22,18 +19,9 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { sendAndConfirmTransaction } from "thirdweb";
-import type { ThirdwebContract } from "thirdweb/contract";
-import { getContractMetadata } from "thirdweb/extensions/common";
+import { toEther } from "thirdweb";
 import { getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
-import {
-  buyFromListing,
-  cancelListing,
-  getAllAuctions,
-  getAllValidListings,
-  getListing,
-} from "thirdweb/extensions/marketplace";
 import {
   MediaRenderer,
   useActiveAccount,
@@ -42,57 +30,62 @@ import {
 import { shortenAddress } from "thirdweb/utils";
 import { NftAttributes } from "./NftAttributes";
 import { CreateListing } from "./CreateListing";
+import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
+import dynamic from "next/dynamic";
+import { NftDetails } from "./NftDetails";
+
+const CancelListingButton = dynamic(() => import("./CancelListingButton"), {
+  ssr: false,
+});
+const BuyFromListingButton = dynamic(() => import("./BuyFromListingButton"), {
+  ssr: false,
+});
 
 type Props = {
-  type: "ERC721" | "ERC1155";
-  nftCollection: ThirdwebContract;
-  marketplaceContract: ThirdwebContract;
   tokenId: bigint;
 };
 
 export function Token(props: Props) {
-  const { type, nftCollection, marketplaceContract, tokenId } = props;
+  const {
+    type,
+    nftContract,
+    marketplaceContract,
+    allAuctions,
+    allValidListings,
+    isLoading,
+    contractMetadata,
+    refetchAllListings,
+    isRefetchingAllListings,
+  } = useMarketplaceContext();
+  const { tokenId } = props;
   const account = useActiveAccount();
-  const { data: contractMetadata, isLoading: isLoadingContractMetadata } =
-    useReadContract(getContractMetadata, {
-      contract: nftCollection,
-    });
+
   const { data: nft, isLoading: isLoadingNFT } = useReadContract(
     type === "ERC1155" ? getERC1155 : getERC721,
     {
       tokenId: BigInt(tokenId),
-      contract: nftCollection,
+      contract: nftContract,
       includeOwner: true,
     }
   );
-  const { data: allValidListings, isLoading: isLoadingValidListings } =
-    useReadContract(getAllValidListings, { contract: marketplaceContract });
 
-  const { data: allAuctions, isLoading: isLoadingAuctions } = useReadContract(
-    getAllAuctions,
-    { contract: marketplaceContract }
-  );
   const listings = (allValidListings || []).filter(
     (item) =>
       item.assetContractAddress.toLowerCase() ===
-        nftCollection.address.toLowerCase() && item.asset.id === BigInt(tokenId)
+        nftContract.address.toLowerCase() && item.asset.id === BigInt(tokenId)
   );
-  console.log({ listings });
+
   const auctions = (allAuctions || []).filter(
     (item) =>
       item.assetContractAddress.toLowerCase() ===
-        nftCollection.address.toLowerCase() && item.asset.id === BigInt(tokenId)
+        nftContract.address.toLowerCase() && item.asset.id === BigInt(tokenId)
   );
-  const allLoaded =
-    !isLoadingContractMetadata &&
-    !isLoadingNFT &&
-    !isLoadingValidListings &&
-    !isLoadingAuctions;
+
+  const allLoaded = !isLoadingNFT && !isLoading && !isRefetchingAllListings;
 
   const ownedByYou =
     nft?.owner?.toLowerCase() === account?.address.toLowerCase();
 
-  if (allLoaded) console.log({ auctions, listings, nft, contractMetadata });
   return (
     <Flex>
       <Box mt="24px" mx="auto">
@@ -130,38 +123,7 @@ export function Token(props: Props) {
                   <NftAttributes attributes={nft.metadata.attributes} />
                 )}
 
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box as="span" flex="1" textAlign="left">
-                      Details
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <Flex direction="row" justifyContent="space-between" mb="1">
-                    <Text>Contract address</Text>
-                    <Link color="purple" href="">
-                      {shortenAddress(nftCollection.address)}
-                    </Link>
-                  </Flex>
-                  <Flex direction="row" justifyContent="space-between" mb="1">
-                    <Text>Token ID</Text>
-                    <Link color="purple" href="">
-                      {nft?.id.toString()}
-                    </Link>
-                  </Flex>
-                  <Flex direction="row" justifyContent="space-between" mb="1">
-                    <Text>Token Standard</Text>
-                    <Text>{type}</Text>
-                  </Flex>
-                  <Flex direction="row" justifyContent="space-between" mb="1">
-                    <Text>Chain</Text>
-                    <Text>{nftCollection.chain.name ?? "Unnamed chain"}</Text>
-                  </Flex>
-                </AccordionPanel>
-              </AccordionItem>
+              {nft && <NftDetails nft={nft} />}
             </Accordion>
           </Flex>
           <Box w={{ lg: "45vw", base: "90vw" }}>
@@ -170,7 +132,7 @@ export function Token(props: Props) {
               <Heading>{contractMetadata?.name}</Heading>
               <Link
                 color="gray"
-                href={`/collection/${nftCollection.chain.id}/${nftCollection.address}`}
+                href={`/collection/${nftContract.chain.id}/${nftContract.address}`}
               >
                 <FaExternalLinkAlt size={20} />
               </Link>
@@ -186,14 +148,8 @@ export function Token(props: Props) {
               </Heading>
               {ownedByYou && <Text color="gray">(You)</Text>}
             </Flex>
-            {account && nft && (
-              <CreateListing
-                nftContract={nftCollection}
-                marketplaceContract={marketplaceContract}
-                tokenId={nft?.id}
-                account={account}
-                type={type}
-              />
+            {account && nft && ownedByYou && (
+              <CreateListing tokenId={nft?.id} account={account} />
             )}
             <Accordion
               mt="30px"
@@ -217,9 +173,9 @@ export function Token(props: Props) {
                         <Thead>
                           <Tr>
                             <Th>Price</Th>
-                            <Th>Qty</Th>
+                            <Th px={1}>Qty</Th>
                             <Th>Expiration</Th>
-                            <Th>From</Th>
+                            <Th px={1}>From</Th>
                             <Th>{""}</Th>
                           </Tr>
                         </Thead>
@@ -231,48 +187,26 @@ export function Token(props: Props) {
                             return (
                               <Tr key={item.id.toString()}>
                                 <Td>
-                                  {item.pricePerToken.toString()}{" "}
+                                  {toEther(item.pricePerToken)}{" "}
                                   {item.currencyValuePerToken.symbol}
                                 </Td>
-                                <Td>{item.quantity.toString()}</Td>
+                                <Td px={1}>{item.quantity.toString()}</Td>
                                 <Td>{getExpiration(item.endTimeInSeconds)}</Td>
-                                <Td>{shortenAddress(item.creatorAddress)}</Td>
+                                <Td px={1}>
+                                  {shortenAddress(item.creatorAddress)}
+                                </Td>
                                 {account && (
                                   <Td>
                                     {!listedByYou ? (
-                                      <Button
-                                        onClick={async () => {
-                                          const transaction = buyFromListing({
-                                            contract: marketplaceContract,
-                                            listingId: item.id,
-                                            quantity: item.quantity,
-                                            recipient: account.address,
-                                          });
-                                          const receipt =
-                                            sendAndConfirmTransaction({
-                                              transaction,
-                                              account,
-                                            });
-                                        }}
-                                      >
-                                        Buy
-                                      </Button>
+                                      <BuyFromListingButton
+                                        account={account}
+                                        listing={item}
+                                      />
                                     ) : (
-                                      <Button
-                                        onClick={async () => {
-                                          const transaction = cancelListing({
-                                            contract: marketplaceContract,
-                                            listingId: item.id,
-                                          });
-                                          const receipt =
-                                            sendAndConfirmTransaction({
-                                              transaction,
-                                              account,
-                                            });
-                                        }}
-                                      >
-                                        Cancel
-                                      </Button>
+                                      <CancelListingButton
+                                        account={account}
+                                        listingId={item.id}
+                                      />
                                     )}
                                   </Td>
                                 )}
@@ -290,23 +224,6 @@ export function Token(props: Props) {
             </Accordion>
           </Box>
         </Flex>
-
-        {/* More from the collection */}
-        {/* <Accordion allowToggle defaultIndex={[0]}>
-				{nft?.metadata.description && (
-					<AccordionItem>
-						<h2>
-							<AccordionButton>
-								<Box as="span" flex="1" textAlign="left">
-									Description
-								</Box>
-								<AccordionIcon />
-							</AccordionButton>
-						</h2>
-						<AccordionPanel pb={4}>{nft.metadata.description}</AccordionPanel>
-					</AccordionItem>
-				)}
-			</Accordion> */}
       </Box>
     </Flex>
   );
@@ -325,7 +242,7 @@ function getExpiration(endTimeInSeconds: bigint) {
   // Format the future date
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "2-digit",
     timeZoneName: "short",

@@ -17,6 +17,7 @@ export function OwnedItem(props: {
           nftCollection.address
         }/token/${nft.id.toString()}`}
         _hover={{ textDecoration: "none" }}
+        w={250}
       >
         <Flex direction="column">
           <MediaRenderer client={client} src={nft.metadata.image} />

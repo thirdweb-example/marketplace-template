@@ -13,6 +13,6 @@ type MarketplaceContract = {
 export const MARKETPLACE_CONTRACTS: MarketplaceContract[] = [
 	{
 		address: "0x8C1D464B385A2B7EAa80dcAAD66DD8BC0256e717",
-		chain: avalancheFuji, // AVAX Fuji
+		chain: avalancheFuji,
 	},
 ];
