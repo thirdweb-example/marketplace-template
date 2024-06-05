@@ -85,13 +85,6 @@ export function Collection() {
       </Box>
       <Flex>
         <ListingGrid />
-        <Flex
-          wrap="wrap"
-          gap="4"
-          mt="40px"
-          justifyContent="space-evenly"
-          mx="auto"
-        ></Flex>
       </Flex>
     </>
   );

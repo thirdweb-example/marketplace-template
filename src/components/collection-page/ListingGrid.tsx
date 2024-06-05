@@ -13,11 +13,17 @@ import { MediaRenderer } from "thirdweb/react";
 
 export function ListingGrid() {
   const { listingsInSelectedCollection, nftContract } = useMarketplaceContext();
-  const columns = useBreakpointValue({ base: 1, sm: 2, md: 4, lg: 4, xl: 5 });
-  if (!listingsInSelectedCollection || !listingsInSelectedCollection.length)
-    return <></>;
+  const len = listingsInSelectedCollection.length;
+  const columns = useBreakpointValue({
+    base: 1,
+    sm: Math.min(len, 2),
+    md: Math.min(len, 4),
+    lg: Math.min(len, 4),
+    xl: Math.min(len, 5),
+  });
+  if (!listingsInSelectedCollection || !len) return <></>;
   return (
-    <SimpleGrid columns={columns} spacing={4} p={4}>
+    <SimpleGrid columns={columns} spacing={4} p={4} mx="auto" mt="20px">
       {listingsInSelectedCollection.map((item) => (
         <Box
           key={item.id}
