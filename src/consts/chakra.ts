@@ -19,7 +19,7 @@ export const chakraTheme = extendTheme({
   components: {
     Text: {
       baseStyle: (props: any) => ({
-        color: mode("black", "white")(props),
+        color: "white",
       }),
     },
   },
