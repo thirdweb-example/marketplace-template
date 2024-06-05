@@ -27,7 +27,7 @@ export function Collection() {
       contract: nftContract,
       tokenId: 0n,
       queryOptions: {
-        enabled: isLoading || contractMetadata?.image,
+        enabled: isLoading || !!contractMetadata?.image,
       },
     }
   );

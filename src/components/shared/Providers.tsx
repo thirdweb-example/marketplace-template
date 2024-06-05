@@ -7,6 +7,14 @@ import { ThirdwebProvider } from "thirdweb/react";
 const theme = extendTheme({
   initialColorMode: "dark",
   useSystemColorMode: false,
+  styles: {
+    global: (props: any) => ({
+      body: {
+        bg: props.colorMode === "dark" ? "gray.800" : "white",
+        color: props.colorMode === "dark" ? "white" : "gray.800",
+      },
+    }),
+  },
   components: {
     // Accordion: {
     // 	baseStyle: {
