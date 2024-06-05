@@ -112,7 +112,7 @@ export function Token(props: Props) {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    {nft.metadata.description}
+                    <Text>{nft.metadata.description}</Text>
                   </AccordionPanel>
                 </AccordionItem>
               )}
@@ -186,7 +186,7 @@ export function Token(props: Props) {
                               account?.address.toLowerCase();
                             return (
                               <Tr key={item.id.toString()}>
-                                <Td>
+                                <Td color="white">
                                   {toEther(item.pricePerToken)}{" "}
                                   {item.currencyValuePerToken.symbol}
                                 </Td>

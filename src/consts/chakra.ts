@@ -24,17 +24,7 @@ export const chakraTheme = extendTheme({
         color: "white",
       }),
     },
-    AccordionPanel: {
-      baseStyle: (props: any) => ({
-        color: "white",
-      }),
-    },
-    AccordionButton: {
-      baseStyle: (props: any) => ({
-        color: "white",
-      }),
-    },
-    Td: {
+    Tr: {
       baseStyle: (props: any) => ({
         color: "white",
       }),
