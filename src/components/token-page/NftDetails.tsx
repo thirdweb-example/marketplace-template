@@ -32,14 +32,14 @@ export function NftDetails(props: Props) {
   }/nft/${nftContract.address}/${nft.id.toString()}`;
   return (
     <AccordionItem>
-      <h2>
+      <Text>
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
             Details
           </Box>
           <AccordionIcon />
         </AccordionButton>
-      </h2>
+      </Text>
       <AccordionPanel pb={4}>
         <Flex direction="row" justifyContent="space-between" mb="1">
           <Text>Contract address</Text>

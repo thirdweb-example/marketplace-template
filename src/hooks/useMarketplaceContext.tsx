@@ -74,12 +74,12 @@ export default function MarketplaceProvider({
   );
   // You can remove this condition if you want to supported _any_ nft collection
   // or you can update the entries in `NFT_CONTRACTS`
-  if (!collectionSupported) {
-    throw new Error("Contract not supported on this marketplace");
-  }
+  // if (!collectionSupported) {
+  //   throw new Error("Contract not supported on this marketplace");
+  // }
 
   const contract = getContract({
-    chain: collectionSupported.chain,
+    chain: marketplaceContract.chain,
     client,
     address: contractAddress,
   });
@@ -92,10 +92,13 @@ export default function MarketplaceProvider({
 
   const { data: is721, isLoading: isChecking721 } = useReadContract(isERC721, {
     contract,
+    queryOptions: {
+      enabled: !!marketplaceContract,
+    },
   });
   const { data: is1155, isLoading: isChecking1155 } = useReadContract(
     isERC1155,
-    { contract }
+    { contract, queryOptions: { enabled: !!marketplaceContract } }
   );
 
   const isNftCollection = is1155 || is721;

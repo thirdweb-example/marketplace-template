@@ -103,14 +103,14 @@ export function Token(props: Props) {
             <Accordion allowToggle allowMultiple defaultIndex={[0]}>
               {nft?.metadata.description && (
                 <AccordionItem>
-                  <h2>
+                  <Text>
                     <AccordionButton>
                       <Box as="span" flex="1" textAlign="left">
                         Description
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
-                  </h2>
+                  </Text>
                   <AccordionPanel pb={4}>
                     <Text>{nft.metadata.description}</Text>
                   </AccordionPanel>
@@ -158,14 +158,14 @@ export function Token(props: Props) {
               defaultIndex={[0]}
             >
               <AccordionItem>
-                <h2>
+                <Text>
                   <AccordionButton>
                     <Box as="span" flex="1" textAlign="left">
                       Listings
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                </h2>
+                </Text>
                 <AccordionPanel pb={4}>
                   {listings.length > 0 ? (
                     <TableContainer>
@@ -186,14 +186,24 @@ export function Token(props: Props) {
                               account?.address.toLowerCase();
                             return (
                               <Tr key={item.id.toString()}>
-                                <Td color="white">
-                                  {toEther(item.pricePerToken)}{" "}
-                                  {item.currencyValuePerToken.symbol}
+                                <Td>
+                                  <Text>
+                                    {toEther(item.pricePerToken)}{" "}
+                                    {item.currencyValuePerToken.symbol}
+                                  </Text>
                                 </Td>
-                                <Td px={1}>{item.quantity.toString()}</Td>
-                                <Td>{getExpiration(item.endTimeInSeconds)}</Td>
                                 <Td px={1}>
-                                  {shortenAddress(item.creatorAddress)}
+                                  <Text>{item.quantity.toString()}</Text>
+                                </Td>
+                                <Td>
+                                  <Text>
+                                    {getExpiration(item.endTimeInSeconds)}
+                                  </Text>
+                                </Td>
+                                <Td px={1}>
+                                  <Text>
+                                    {shortenAddress(item.creatorAddress)}
+                                  </Text>
                                 </Td>
                                 {account && (
                                   <Td>

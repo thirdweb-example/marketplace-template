@@ -104,7 +104,7 @@ export function ProfileSection(props: Props) {
           <Box>Loading...</Box>
         ) : (
           <>
-            <Flex direction="column">
+            <Box>
               <Tabs
                 variant="soft-rounded"
                 // mt="10px"
@@ -158,6 +158,7 @@ export function ProfileSection(props: Props) {
                             contract.address
                           }/token/${item.asset.id.toString()}`}
                           _hover={{ textDecoration: "none" }}
+                          w={250}
                         >
                           <Flex direction="column">
                             <MediaRenderer
@@ -181,7 +182,7 @@ export function ProfileSection(props: Props) {
                   )}
                 </>
               )}
-            </Flex>
+            </Box>
           </>
         )}
       </Flex>
