@@ -21,7 +21,7 @@ export default function Home() {
       <Box mt="24px" m="auto">
         <Flex direction="column" gap="4">
           {/* Delete this <Card /> in your own app */}
-          <Card>
+          <Card bg="black" border="1px">
             <CardHeader>
               <Heading size="md">Marketplace Template v2</Heading>
             </CardHeader>
@@ -93,6 +93,14 @@ const _latestUpdates: Array<{ title: string; bullet_points: string[] }> = [
     title: "Multiple collections supported",
     bullet_points: [
       "The new template now supports multiple collections, you view your owned NFTs and your listings",
+    ],
+  },
+  {
+    title: "Contribute",
+    bullet_points: [
+      "We welcome all contributions from the community.",
+      "Found a bug or have some suggestions? Create a GitHub issue!",
+      "Repo: https://github.com/thirdweb-example/marketplace-template",
     ],
   },
 ];
