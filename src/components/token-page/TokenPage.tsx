@@ -99,7 +99,7 @@ export function Token(props: Props) {
               src={nft?.metadata.image}
               style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
             />
-            <Accordion allowToggle allowMultiple defaultIndex={[0]}>
+            <Accordion allowToggle allowMultiple defaultIndex={[0, 1]}>
               {nft?.metadata.description && (
                 <AccordionItem>
                   <Text>
@@ -123,7 +123,6 @@ export function Token(props: Props) {
                 )}
 
               {nft && <NftDetails nft={nft} />}
-
             </Accordion>
           </Flex>
           <Box w={{ lg: "45vw", base: "90vw" }}>
@@ -154,7 +153,7 @@ export function Token(props: Props) {
             <Accordion
               mt="30px"
               sx={{ container: {} }}
-              defaultIndex={[0]}
+              defaultIndex={[0, 1]}
               allowMultiple
             >
               <AccordionItem>

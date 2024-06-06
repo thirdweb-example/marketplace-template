@@ -21,7 +21,7 @@ export default function Home() {
       <Box mt="24px" m="auto">
         <Flex direction="column" gap="4">
           {/* Delete this <Card /> in your own app */}
-          <Card bg="black" border="1px">
+          <Card bg="black" border="1px" maxW="90vw" mx="auto">
             <CardHeader>
               <Heading size="md">Marketplace Template v2</Heading>
             </CardHeader>
@@ -92,7 +92,14 @@ const _latestUpdates: Array<{ title: string; bullet_points: string[] }> = [
   {
     title: "Multiple collections supported",
     bullet_points: [
-      "The new template now supports multiple collections, you view your owned NFTs and your listings",
+      "The new template now supports multiple collections, you can view your owned NFTs and your listings",
+    ],
+  },
+  {
+    title: "Upcoming features",
+    bullet_points: [
+      "Select different currencies (ERC20) when creating listings",
+      "UI for English Auctions",
     ],
   },
   {
