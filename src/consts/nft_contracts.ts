@@ -1,5 +1,5 @@
 import type { Chain } from "thirdweb";
-import { avalancheFuji } from "./chains";
+import { avalancheFuji, polygonAmoy } from "./chains";
 
 export type NftContract = {
   address: string;
@@ -12,6 +12,12 @@ export type NftContract = {
   slug?: string;
 };
 
+/**
+ * Below is a list of all NFT contracts supported by your marketplace(s)
+ * This is of course hard-coded for demo purpose
+ *
+ * In reality, the list should be dynamically fetched from your own data source
+ */
 export const NFT_CONTRACTS: NftContract[] = [
   {
     address: "0x6b869a0cF84147f05a447636c42b8E53De65714E",
@@ -48,6 +54,14 @@ export const NFT_CONTRACTS: NftContract[] = [
     thumbnailUrl:
       "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeiay3ffxy3os56bvnu5cmq7gids4v6n4hf5nvvcb3gy2dzavi3ltnu/profile.jpg",
     slug: "gorobot",
+    type: "ERC721",
+  },
+  {
+    address: "0x4b6CDEFF5885A57678261bb95250aC43aD490752",
+    chain: polygonAmoy,
+    title: "Mata NFT",
+    thumbnailUrl:
+      "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeidec7x6bptqmrxgptaedd7wfwxbsccqfogzwfsd4a7duxn4sdmnxy/0.png",
     type: "ERC721",
   },
 ];

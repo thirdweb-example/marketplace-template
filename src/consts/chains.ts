@@ -1,6 +1,9 @@
 import { defineChain } from "thirdweb";
 
-export { avalancheFuji, sepolia } from "thirdweb/chains";
+/**
+ * All chains should be exported from this file
+ */
+export { avalancheFuji, sepolia, polygonAmoy } from "thirdweb/chains";
 
 /**
  * Define any custom chain using `defineChain`

@@ -1,9 +1,9 @@
 import type { Chain } from "thirdweb";
-import { avalancheFuji } from "./chains";
+import { avalancheFuji, polygonAmoy } from "./chains";
 
 type MarketplaceContract = {
-	address: string;
-	chain: Chain;
+  address: string;
+  chain: Chain;
 };
 
 /**
@@ -11,8 +11,12 @@ type MarketplaceContract = {
  * Only list one marketplace contract address for each chain
  */
 export const MARKETPLACE_CONTRACTS: MarketplaceContract[] = [
-	{
-		address: "0x8C1D464B385A2B7EAa80dcAAD66DD8BC0256e717",
-		chain: avalancheFuji,
-	},
+  {
+    address: "0x8C1D464B385A2B7EAa80dcAAD66DD8BC0256e717",
+    chain: avalancheFuji,
+  },
+  {
+    address: "0x571B773F1e4A7C080b51C36f37e06f371C515569",
+    chain: polygonAmoy,
+  },
 ];
