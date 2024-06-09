@@ -10,15 +10,20 @@ import {
   useBreakpointValue,
   Text,
   Button,
+  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+} from "react-icons/md";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { getNFTs as getNFTs1155 } from "thirdweb/extensions/erc1155";
 import { getNFTs as getNFTs721 } from "thirdweb/extensions/erc721";
 import { MediaRenderer, useReadContract } from "thirdweb/react";
 
-const itemsPerPage = 20;
-
 export function AllNftsGrid() {
+  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const { nftContract, type, supplyInfo } = useMarketplaceContext();
   const startTokenId = supplyInfo?.startTokenId ?? 0n;
@@ -88,14 +93,37 @@ export function AllNftsGrid() {
         overflowX="auto"
       >
         <Flex direction="row" justifyContent="center" gap="3">
-          {pages.map((page, index) => (
-            <Button
-              border={index === currentPageIndex ? "1px solid purple" : ""}
-              onClick={() => setCurrentPageIndex(index)}
-            >
-              {index + 1}
-            </Button>
-          ))}
+          <Button onClick={() => setCurrentPageIndex(0)}>
+            <MdKeyboardDoubleArrowLeft />
+          </Button>
+          <Button
+            disabled={currentPageIndex === 0}
+            onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
+          >
+            <RiArrowLeftSLine />
+          </Button>
+          <Text my="auto">
+            Page {currentPageIndex + 1} of {pages.length}
+          </Text>
+          <Button
+            disabled={currentPageIndex === pages.length}
+            onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
+          >
+            <RiArrowRightSLine />
+          </Button>
+          <Button onClick={() => setCurrentPageIndex(pages.length - 1)}>
+            <MdKeyboardDoubleArrowRight />
+          </Button>
+          {/* <Select
+            w="80px"
+            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+          >
+            {[20, 40, 60].map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select> */}
         </Flex>
       </Box>
     </>
