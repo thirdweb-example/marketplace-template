@@ -2,18 +2,11 @@ import { MediaRenderer, useReadContract } from "thirdweb/react";
 import { getNFT as getNFT721 } from "thirdweb/extensions/erc721";
 import { getNFT as getNFT1155 } from "thirdweb/extensions/erc1155";
 import { client } from "@/consts/client";
-import {
-  Box,
-  Flex,
-  Heading,
-  Tab,
-  TabList,
-  Tabs,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { ListingGrid } from "./ListingGrid";
+import { AllNftsGrid } from "./AllNftsGrid";
 
 export function Collection() {
   // `0` is Listings, `1` is `Auctions`
@@ -24,6 +17,7 @@ export function Collection() {
     isLoading,
     contractMetadata,
     listingsInSelectedCollection,
+    supplyInfo,
   } = useMarketplaceContext();
 
   // In case the collection doesn't have a thumbnail, we use the image of the first NFT
@@ -77,14 +71,25 @@ export function Collection() {
           >
             <TabList>
               <Tab>Listings ({listingsInSelectedCollection.length || 0})</Tab>
+              <Tab>
+                All items{" "}
+                {supplyInfo
+                  ? `(${(
+                      supplyInfo.endTokenId -
+                      supplyInfo.startTokenId +
+                      1n
+                    ).toString()})`
+                  : ""}
+              </Tab>
               {/* Support for English Auctions coming soon */}
               {/* <Tab>Auctions ({allAuctions?.length || 0})</Tab> */}
             </TabList>
           </Tabs>
         </Flex>
       </Box>
-      <Flex>
-        <ListingGrid />
+      <Flex direction="column">
+        {tabIndex === 0 && <ListingGrid />}
+        {tabIndex === 1 && <AllNftsGrid />}
       </Flex>
     </>
   );
