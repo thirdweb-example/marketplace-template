@@ -58,7 +58,8 @@ export default function BuyFromListingButton(props: Props) {
           console.error(err);
           if ((err as Error).message.startsWith("insufficient funds for gas")) {
             toast({
-              title: `You don't have enough funds for this purchase. Make sure you have enough gas for the transaction + ${listing.currencyValuePerToken.displayValue} ${listing.currencyValuePerToken.symbol}`,
+              title: "You don't have enough funds for this purchase.",
+              description: `Make sure you have enough gas for the transaction + ${listing.currencyValuePerToken.displayValue} ${listing.currencyValuePerToken.symbol}`,
               status: "error",
               isClosable: true,
               duration: 7000,

@@ -26,6 +26,7 @@ import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { Link } from "@chakra-ui/next-js";
 import { getOwnedERC1155s } from "@/extensions/getOwnedERC1155s";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { useENSContext } from "@/hooks/useENSContext";
 
 type Props = {
   account: Account;
@@ -33,6 +34,7 @@ type Props = {
 
 export function ProfileSection(props: Props) {
   const { account } = props;
+  const { ensAvatar, ensName } = useENSContext();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [selectedCollection, setSelectedCollection] = useState<NftContract>(
     NFT_CONTRACTS[0]
@@ -48,7 +50,6 @@ export function ProfileSection(props: Props) {
     error,
     isLoading: isLoadingOwnedNFTs,
   } = useReadContract(
-    // @ts-ignore TODO fix later
     selectedCollection.type === "ERC1155" ? getOwnedERC1155s : getOwnedERC721s,
     {
       contract,
@@ -88,13 +89,12 @@ export function ProfileSection(props: Props) {
     <Box px={{ lg: "50px", base: "20px" }}>
       <Flex direction={{ lg: "row", md: "column", sm: "column" }} gap={5}>
         <Img
-          src={blo(account.address as `0x${string}`)}
+          src={ensAvatar ?? blo(account.address as `0x${string}`)}
           w={{ lg: 150, base: 100 }}
           rounded="8px"
         />
         <Box my="auto">
-          {/* TODO: fetch ENS name */}
-          <Heading>Unnamed</Heading>
+          <Heading>{ensName ?? "Unnamed"}</Heading>
           <Text color="gray">{shortenAddress(account.address)}</Text>
         </Box>
       </Flex>
@@ -105,7 +105,9 @@ export function ProfileSection(props: Props) {
           setSelectedCollection={setSelectedCollection}
         />
         {isLoadingOwnedNFTs ? (
-          <Box>Loading...</Box>
+          <Box>
+            <Text>Loading...</Text>
+          </Box>
         ) : (
           <>
             <Box>
@@ -143,7 +145,9 @@ export function ProfileSection(props: Props) {
                         ))}
                       </>
                     ) : (
-                      <Box>You do not own any NFT in this collection</Box>
+                      <Box>
+                        <Text>You do not own any NFT in this collection</Text>
+                      </Box>
                     )}
                   </>
                 ) : (

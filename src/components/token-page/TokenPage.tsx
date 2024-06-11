@@ -72,7 +72,6 @@ export function Token(props: Props) {
       item.assetContractAddress.toLowerCase() ===
         nftContract.address.toLowerCase() && item.asset.id === BigInt(tokenId)
   );
-  console.log({ listings });
 
   const auctions = (allAuctions || []).filter(
     (item) =>

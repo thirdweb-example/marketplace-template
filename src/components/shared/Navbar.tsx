@@ -1,6 +1,7 @@
 "use client";
 
 import { client } from "@/consts/client";
+import { useENSContext } from "@/hooks/useENSContext";
 import { Link } from "@chakra-ui/next-js";
 import {
   Box,
@@ -62,6 +63,7 @@ function ProfileButton({
   wallet: Wallet;
 }) {
   const { disconnect } = useDisconnect();
+  const { ensName, ensAvatar } = useENSContext();
   return (
     <Menu>
       <MenuButton as={Button} height="56px">
@@ -70,7 +72,7 @@ function ProfileButton({
             <FiUser size={30} />
           </Box>
           <Image
-            src={blo(address as `0x${string}`)}
+            src={ensAvatar ?? blo(address as `0x${string}`)}
             height="40px"
             rounded="8px"
           />
@@ -83,7 +85,7 @@ function ProfileButton({
           </Box>
         </MenuItem>
         <MenuItem as={Link} href="/profile" _hover={{ textDecoration: "none" }}>
-          Profile
+          Profile {ensName ? `(${ensName})` : ""}
         </MenuItem>
         <MenuItem
           onClick={() => {
