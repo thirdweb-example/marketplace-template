@@ -2,7 +2,7 @@ import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 
 export const chakraThemeConfig: ThemeConfig = {
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 };
 
@@ -25,6 +25,11 @@ export const chakraTheme = extendTheme({
       }),
     },
     Tr: {
+      baseStyle: (props: any) => ({
+        color: "white",
+      }),
+    },
+    Input: {
       baseStyle: (props: any) => ({
         color: "white",
       }),
