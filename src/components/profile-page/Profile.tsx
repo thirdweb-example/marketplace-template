@@ -16,7 +16,11 @@ import type { Account } from "thirdweb/wallets";
 import { ProfileMenu } from "./Menu";
 import { useState } from "react";
 import { NFT_CONTRACTS, type NftContract } from "@/consts/nft_contracts";
-import { MediaRenderer, useReadContract } from "thirdweb/react";
+import {
+  MediaRenderer,
+  useActiveAccount,
+  useReadContract,
+} from "thirdweb/react";
 import { getContract, toEther } from "thirdweb";
 import { client } from "@/consts/client";
 import { getOwnedERC721s } from "@/extensions/getOwnedERC721s";
@@ -26,15 +30,19 @@ import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { Link } from "@chakra-ui/next-js";
 import { getOwnedERC1155s } from "@/extensions/getOwnedERC1155s";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { useENSContext } from "@/hooks/useENSContext";
+import { useGetENSAvatar } from "@/hooks/useGetENSAvatar";
+import { useGetENSName } from "@/hooks/useGetENSName";
 
 type Props = {
-  account: Account;
+  address: string;
 };
 
 export function ProfileSection(props: Props) {
-  const { account } = props;
-  const { ensAvatar, ensName } = useENSContext();
+  const { address } = props;
+  const account = useActiveAccount();
+  const isYou = address.toLowerCase() === account?.address.toLowerCase();
+  const { data: ensName } = useGetENSName({ address });
+  const { data: ensAvatar } = useGetENSAvatar({ ensName });
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [selectedCollection, setSelectedCollection] = useState<NftContract>(
     NFT_CONTRACTS[0]
@@ -53,10 +61,10 @@ export function ProfileSection(props: Props) {
     selectedCollection.type === "ERC1155" ? getOwnedERC1155s : getOwnedERC721s,
     {
       contract,
-      owner: account.address,
+      owner: address,
       requestPerSec: 50,
       queryOptions: {
-        enabled: !!account,
+        enabled: !!address,
       },
     }
   );
@@ -81,7 +89,7 @@ export function ProfileSection(props: Props) {
         (item) =>
           item.assetContractAddress.toLowerCase() ===
             contract.address.toLowerCase() &&
-          item.creatorAddress.toLowerCase() === account.address.toLowerCase()
+          item.creatorAddress.toLowerCase() === address.toLowerCase()
       )
     : [];
   const columns = useBreakpointValue({ base: 1, sm: 2, md: 2, lg: 2, xl: 4 });
@@ -89,13 +97,13 @@ export function ProfileSection(props: Props) {
     <Box px={{ lg: "50px", base: "20px" }}>
       <Flex direction={{ lg: "row", md: "column", sm: "column" }} gap={5}>
         <Img
-          src={ensAvatar ?? blo(account.address as `0x${string}`)}
+          src={ensAvatar ?? blo(address as `0x${string}`)}
           w={{ lg: 150, base: 100 }}
           rounded="8px"
         />
         <Box my="auto">
           <Heading>{ensName ?? "Unnamed"}</Heading>
-          <Text color="gray">{shortenAddress(account.address)}</Text>
+          <Text color="gray">{shortenAddress(address)}</Text>
         </Box>
       </Flex>
 
@@ -146,7 +154,15 @@ export function ProfileSection(props: Props) {
                       </>
                     ) : (
                       <Box>
-                        <Text>You do not own any NFT in this collection</Text>
+                        <Text>
+                          {isYou
+                            ? "You"
+                            : ensName
+                            ? ensName
+                            : shortenAddress(address)}{" "}
+                          {isYou ? "do" : "does"} not own any NFT in this
+                          collection
+                        </Text>
                       </Box>
                     )}
                   </>

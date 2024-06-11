@@ -1,7 +1,8 @@
 "use client";
 
 import { client } from "@/consts/client";
-import { useENSContext } from "@/hooks/useENSContext";
+import { useGetENSAvatar } from "@/hooks/useGetENSAvatar";
+import { useGetENSName } from "@/hooks/useGetENSName";
 import { Link } from "@chakra-ui/next-js";
 import {
   Box,
@@ -63,7 +64,8 @@ function ProfileButton({
   wallet: Wallet;
 }) {
   const { disconnect } = useDisconnect();
-  const { ensName, ensAvatar } = useENSContext();
+  const { data: ensName } = useGetENSName({ address });
+  const { data: ensAvatar } = useGetENSAvatar({ ensName });
   return (
     <Menu>
       <MenuButton as={Button} height="56px">
