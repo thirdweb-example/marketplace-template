@@ -57,7 +57,11 @@ export function CreateListing(props: Props) {
       <br />
       <Flex direction="column" w={{ base: "90vw", lg: "400px" }} gap="10px">
         <Text>Price</Text>
-        <Input type="number" ref={priceRef} />
+        <Input
+          type="number"
+          ref={priceRef}
+          placeholder="Enter a price for your listing"
+        />
         <Menu>
           <MenuButton minH="48px" as={Button} rightIcon={<ChevronDownIcon />}>
             {currency ? (
@@ -92,7 +96,9 @@ export function CreateListing(props: Props) {
                 />
                 <Text my="auto">{token.symbol}</Text>
                 {token.tokenAddress.toLowerCase() ===
-                  currency?.tokenAddress.toLowerCase() && <CheckIcon ml="auto" />}
+                  currency?.tokenAddress.toLowerCase() && (
+                  <CheckIcon ml="auto" />
+                )}
               </MenuItem>
             ))}
           </MenuList>

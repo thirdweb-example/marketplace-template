@@ -70,6 +70,7 @@ function ProfileButton({
   const { disconnect } = useDisconnect();
   const { data: ensName } = useGetENSName({ address });
   const { data: ensAvatar } = useGetENSAvatar({ ensName });
+  const { colorMode } = useColorMode();
   return (
     <Menu>
       <MenuButton as={Button} height="56px">
@@ -87,7 +88,7 @@ function ProfileButton({
       <MenuList>
         <MenuItem display="flex">
           <Box mx="auto">
-            <ConnectButton client={client} />
+            <ConnectButton client={client} theme={colorMode} />
           </Box>
         </MenuItem>
         <MenuItem as={Link} href="/profile" _hover={{ textDecoration: "none" }}>
