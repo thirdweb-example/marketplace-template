@@ -20,11 +20,12 @@ import { MediaRenderer, useReadContract } from "thirdweb/react";
 import { getContract, toEther } from "thirdweb";
 import { client } from "@/consts/client";
 import { getOwnedERC721s } from "@/extensions/getOwnedERC721s";
-import { getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import { OwnedItem } from "./OwnedItem";
 import { getAllValidListings } from "thirdweb/extensions/marketplace";
 import { MARKETPLACE_CONTRACTS } from "@/consts/marketplace_contract";
 import { Link } from "@chakra-ui/next-js";
+import { getOwnedERC1155s } from "@/extensions/getOwnedERC1155s";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 type Props = {
   account: Account;
@@ -48,7 +49,7 @@ export function ProfileSection(props: Props) {
     isLoading: isLoadingOwnedNFTs,
   } = useReadContract(
     // @ts-ignore TODO fix later
-    selectedCollection.type === "ERC1155" ? getOwnedNFTs : getOwnedERC721s,
+    selectedCollection.type === "ERC1155" ? getOwnedERC1155s : getOwnedERC721s,
     {
       contract,
       owner: account.address,
@@ -108,20 +109,26 @@ export function ProfileSection(props: Props) {
         ) : (
           <>
             <Box>
-              <Tabs
-                variant="soft-rounded"
-                // mt="10px"
-                mb="10px"
-                onChange={(index) => setTabIndex(index)}
-                isLazy
-                defaultIndex={0}
-              >
-                <TabList>
-                  <Tab>Owned ({data?.length})</Tab>
-                  <Tab>Listings ({listings.length || 0})</Tab>
-                  {/* <Tab>Auctions ({allAuctions?.length || 0})</Tab> */}
-                </TabList>
-              </Tabs>
+              <Flex direction="row" justifyContent="space-between" px="12px">
+                <Tabs
+                  variant="soft-rounded"
+                  onChange={(index) => setTabIndex(index)}
+                  isLazy
+                  defaultIndex={0}
+                >
+                  <TabList>
+                    <Tab>Owned ({data?.length})</Tab>
+                    <Tab>Listings ({listings.length || 0})</Tab>
+                    {/* <Tab>Auctions ({allAuctions?.length || 0})</Tab> */}
+                  </TabList>
+                </Tabs>
+                <Link
+                  href={`/collection/${selectedCollection.chain.id}/${selectedCollection.address}`}
+                  color="gray"
+                >
+                  View collection <ExternalLinkIcon mx="2px" />
+                </Link>
+              </Flex>
               <SimpleGrid columns={columns} spacing={4} p={4}>
                 {tabIndex === 0 ? (
                   <>

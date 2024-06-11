@@ -1,6 +1,6 @@
 import { NATIVE_TOKEN_ICON_MAP, Token } from "@/consts/supported_tokens";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { CheckIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -11,6 +11,7 @@ import {
   MenuList,
   Text,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { NATIVE_TOKEN_ADDRESS, sendAndConfirmTransaction } from "thirdweb";
@@ -32,6 +33,7 @@ export function CreateListing(props: Props) {
   const switchChain = useSwitchActiveWalletChain();
   const activeChain = useActiveWalletChain();
   const [currency, setCurrency] = useState<Token>();
+  const toast = useToast();
 
   const {
     nftContract,
@@ -77,7 +79,6 @@ export function CreateListing(props: Props) {
               <MenuItem
                 minH="48px"
                 key={token.tokenAddress}
-                // as={Button}
                 onClick={() => setCurrency(token)}
                 display={"flex"}
                 flexDir={"row"}
@@ -90,6 +91,8 @@ export function CreateListing(props: Props) {
                   mr="14px"
                 />
                 <Text my="auto">{token.symbol}</Text>
+                {token.tokenAddress.toLowerCase() ===
+                  currency?.tokenAddress.toLowerCase() && <CheckIcon ml="auto" />}
               </MenuItem>
             ))}
           </MenuList>
@@ -97,9 +100,23 @@ export function CreateListing(props: Props) {
         <Button
           disabled={!currency}
           onClick={async () => {
-            if (!currency) throw Error("Need to select listing currency");
             const value = priceRef.current?.value;
-            if (!value) throw Error("Need to enter a price for this listing");
+            if (!value) {
+              return toast({
+                title: "Please enter a price for this listing",
+                status: "error",
+                isClosable: true,
+                duration: 5000,
+              });
+            }
+            if (!currency) {
+              return toast({
+                title: `Please select a currency for the listing`,
+                status: "error",
+                isClosable: true,
+                duration: 5000,
+              });
+            }
             if (activeChain?.id !== nftContract.chain.id) {
               await switchChain(nftContract.chain);
             }
@@ -111,6 +128,7 @@ export function CreateListing(props: Props) {
               currencyContractAddress: currency?.tokenAddress,
               pricePerToken: value,
             });
+
             await sendAndConfirmTransaction({
               transaction,
               account,
