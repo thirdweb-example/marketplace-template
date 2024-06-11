@@ -1,5 +1,5 @@
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { sendAndConfirmTransaction } from "thirdweb";
 import { cancelListing } from "thirdweb/extensions/marketplace";
 import {
@@ -19,6 +19,8 @@ export default function CancelListingButton(props: Props) {
   const switchChain = useSwitchActiveWalletChain();
   const activeChain = useActiveWalletChain();
   const { account, listingId } = props;
+  const toast = useToast();
+
   return (
     <Button
       onClick={async () => {
@@ -32,6 +34,12 @@ export default function CancelListingButton(props: Props) {
         await sendAndConfirmTransaction({
           transaction,
           account,
+        });
+        toast({
+          title: "Listing cancelled successfully",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
         });
         refetchAllListings();
       }}

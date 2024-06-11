@@ -19,7 +19,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { toEther } from "thirdweb";
 import { getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
 import {
@@ -175,7 +174,7 @@ export function Token(props: Props) {
                         <Thead>
                           <Tr>
                             <Th>Price</Th>
-                            <Th px={1}>Qty</Th>
+                            {type === "ERC1155" && <Th px={1}>Qty</Th>}
                             <Th>Expiration</Th>
                             <Th px={1}>From</Th>
                             <Th>{""}</Th>
@@ -190,13 +189,15 @@ export function Token(props: Props) {
                               <Tr key={item.id.toString()}>
                                 <Td>
                                   <Text>
-                                    {toEther(item.pricePerToken)}{" "}
+                                    {item.currencyValuePerToken.displayValue}{" "}
                                     {item.currencyValuePerToken.symbol}
                                   </Text>
                                 </Td>
-                                <Td px={1}>
-                                  <Text>{item.quantity.toString()}</Text>
-                                </Td>
+                                {type === "ERC1155" && (
+                                  <Td px={1}>
+                                    <Text>{item.quantity.toString()}</Text>
+                                  </Td>
+                                )}
                                 <Td>
                                   <Text>
                                     {getExpiration(item.endTimeInSeconds)}
@@ -204,7 +205,10 @@ export function Token(props: Props) {
                                 </Td>
                                 <Td px={1}>
                                   <Text>
-                                    {shortenAddress(item.creatorAddress)}
+                                    {item.creatorAddress.toLowerCase() ===
+                                    account?.address.toLowerCase()
+                                      ? "You"
+                                      : shortenAddress(item.creatorAddress)}
                                   </Text>
                                 </Td>
                                 {account && (
