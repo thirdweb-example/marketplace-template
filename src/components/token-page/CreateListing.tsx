@@ -104,7 +104,7 @@ export function CreateListing(props: Props) {
           </MenuList>
         </Menu>
         <Button
-          disabled={!currency}
+          isDisabled={!currency}
           onClick={async () => {
             const value = priceRef.current?.value;
             if (!value) {

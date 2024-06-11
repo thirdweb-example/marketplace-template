@@ -44,7 +44,7 @@ export function AllNftsGrid() {
         : itemsPerPage;
     pages.push({ start: Number(currentStartTokenId), count: count });
   }
-  const { data: allNFTs, isLoading: loadingNFTs } = useReadContract(
+  const { data: allNFTs } = useReadContract(
     type === "ERC1155" ? getNFTs1155 : getNFTs721,
     {
       contract: nftContract,
@@ -60,6 +60,8 @@ export function AllNftsGrid() {
     lg: Math.min(len, 4),
     xl: Math.min(len, 5),
   });
+
+  console.log({ pages, currentPageIndex, length: pages.length });
   return (
     <>
       <SimpleGrid columns={columns} spacing={4} p={4} mx="auto" mt="20px">
@@ -93,11 +95,14 @@ export function AllNftsGrid() {
         overflowX="auto"
       >
         <Flex direction="row" justifyContent="center" gap="3">
-          <Button onClick={() => setCurrentPageIndex(0)}>
+          <Button
+            onClick={() => setCurrentPageIndex(0)}
+            isDisabled={currentPageIndex === 0}
+          >
             <MdKeyboardDoubleArrowLeft />
           </Button>
           <Button
-            disabled={currentPageIndex === 0}
+            isDisabled={currentPageIndex === 0}
             onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
           >
             <RiArrowLeftSLine />
@@ -106,12 +111,15 @@ export function AllNftsGrid() {
             Page {currentPageIndex + 1} of {pages.length}
           </Text>
           <Button
-            disabled={currentPageIndex === pages.length}
+            isDisabled={currentPageIndex === pages.length - 1}
             onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
           >
             <RiArrowRightSLine />
           </Button>
-          <Button onClick={() => setCurrentPageIndex(pages.length - 1)}>
+          <Button
+            onClick={() => setCurrentPageIndex(pages.length - 1)}
+            isDisabled={currentPageIndex === pages.length - 1}
+          >
             <MdKeyboardDoubleArrowRight />
           </Button>
           {/* <Select
