@@ -14,9 +14,12 @@ import {
   MenuItem,
   MenuList,
   Image,
+  useColorMode,
 } from "@chakra-ui/react";
 import { blo } from "blo";
+import { FaRegMoon } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
+import { IoSunny } from "react-icons/io5";
 import {
   ConnectButton,
   useActiveAccount,
@@ -45,6 +48,7 @@ export function Navbar() {
           </Heading>
         </Box>
         <Box>
+          <ToggleThemeButton />
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (
@@ -98,5 +102,14 @@ function ProfileButton({
         </MenuItem>
       </MenuList>
     </Menu>
+  );
+}
+
+function ToggleThemeButton() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <Button height="56px" w="56px" onClick={toggleColorMode} mr="10px">
+      {colorMode === "light" ? <FaRegMoon /> : <IoSunny />}
+    </Button>
   );
 }

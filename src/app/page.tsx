@@ -21,7 +21,7 @@ export default function Home() {
       <Box mt="24px" m="auto">
         <Flex direction="column" gap="4">
           {/* Delete this <Card /> in your own app */}
-          <Card bg="black" border="1px" maxW="90vw" mx="auto">
+          <Card border="1px" maxW="90vw" mx="auto">
             <CardHeader>
               <Heading size="md">Marketplace Template v2</Heading>
             </CardHeader>
