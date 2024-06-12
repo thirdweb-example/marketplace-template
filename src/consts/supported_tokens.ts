@@ -75,5 +75,5 @@ export const NATIVE_TOKEN_ICON_MAP: { [key in Chain["id"]]: string } = {
   1: "/native-token-icons/eth.png",
   [sepolia.id]: "/native-token-icons/eth.png",
   [avalancheFuji.id]: "/native-token-icons/avax.png",
-  [polygonAmoy.id]: "native-token-icons/matic.png",
+  [polygonAmoy.id]: "/native-token-icons/matic.png",
 };
