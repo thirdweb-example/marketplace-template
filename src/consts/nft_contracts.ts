@@ -64,4 +64,12 @@ export const NFT_CONTRACTS: NftContract[] = [
       "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeidec7x6bptqmrxgptaedd7wfwxbsccqfogzwfsd4a7duxn4sdmnxy/0.png",
     type: "ERC721",
   },
+  {
+    address: "0xd5e815241882676F772A624E3892b27Ff3a449c4",
+    chain: avalancheFuji,
+    title: "Cats (ERC1155)",
+    thumbnailUrl:
+      "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeif2nz6wbwuryijk2c4ayypocibexdeirlvmciqjyvlzz46mzoirtm/0.png",
+    type: "ERC1155",
+  },
 ];

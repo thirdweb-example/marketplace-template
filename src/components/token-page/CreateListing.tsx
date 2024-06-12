@@ -12,9 +12,18 @@ import {
   Text,
   Image,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { NATIVE_TOKEN_ADDRESS, sendAndConfirmTransaction } from "thirdweb";
+import {
+  isApprovedForAll as isApprovedForAll1155,
+  setApprovalForAll as setApprovalForAll1155,
+} from "thirdweb/extensions/erc1155";
+import {
+  isApprovedForAll as isApprovedForAll721,
+  setApprovalForAll as setApprovalForAll721,
+} from "thirdweb/extensions/erc721";
 import { createListing } from "thirdweb/extensions/marketplace";
 import {
   useActiveWalletChain,
@@ -29,6 +38,7 @@ type Props = {
 
 export function CreateListing(props: Props) {
   const priceRef = useRef<HTMLInputElement>(null);
+  const qtyRef = useRef<HTMLInputElement>(null);
   const { tokenId, account } = props;
   const switchChain = useSwitchActiveWalletChain();
   const activeChain = useActiveWalletChain();
@@ -55,13 +65,43 @@ export function CreateListing(props: Props) {
   return (
     <>
       <br />
-      <Flex direction="column" w={{ base: "90vw", lg: "400px" }} gap="10px">
-        <Text>Price</Text>
-        <Input
-          type="number"
-          ref={priceRef}
-          placeholder="Enter a price for your listing"
-        />
+      <Flex direction="column" w={{ base: "90vw", lg: "430px" }} gap="10px">
+        {type === "ERC1155" ? (
+          <>
+            <Flex
+              direction="row"
+              flexWrap="wrap"
+              justifyContent="space-between"
+            >
+              <Box>
+                <Text>Price</Text>
+                <Input
+                  type="number"
+                  ref={priceRef}
+                  placeholder="Enter a price"
+                />
+              </Box>
+              <Box>
+                <Text>Quantity</Text>
+                <Input
+                  type="number"
+                  ref={qtyRef}
+                  defaultValue={1}
+                  placeholder="Quantity to sell"
+                />
+              </Box>
+            </Flex>
+          </>
+        ) : (
+          <>
+            <Text>Price</Text>
+            <Input
+              type="number"
+              ref={priceRef}
+              placeholder="Enter a price for your listing"
+            />
+          </>
+        )}
         <Menu>
           <MenuButton minH="48px" as={Button} rightIcon={<ChevronDownIcon />}>
             {currency ? (
@@ -126,11 +166,52 @@ export function CreateListing(props: Props) {
             if (activeChain?.id !== nftContract.chain.id) {
               await switchChain(nftContract.chain);
             }
+            const _qty = BigInt(qtyRef.current?.value ?? 1);
+            if (type === "ERC1155") {
+              if (!_qty || _qty <= 0n) {
+                return toast({
+                  title: "Error",
+                  description: "Invalid quantity",
+                  status: "error",
+                  isClosable: true,
+                  duration: 5000,
+                });
+              }
+            }
+
+            // Check for approval
+            const checkApprove =
+              type === "ERC1155" ? isApprovedForAll1155 : isApprovedForAll721;
+
+            const isApproved = await checkApprove({
+              contract: nftContract,
+              owner: account.address,
+              operator: marketplaceContract.address,
+            });
+
+            if (!isApproved) {
+              const setApproval =
+                type === "ERC1155"
+                  ? setApprovalForAll1155
+                  : setApprovalForAll721;
+
+              const approveTx = setApproval({
+                contract: nftContract,
+                operator: marketplaceContract.address,
+                approved: true,
+              });
+
+              await sendAndConfirmTransaction({
+                transaction: approveTx,
+                account,
+              });
+            }
+
             const transaction = createListing({
               contract: marketplaceContract,
               assetContractAddress: nftContract.address,
               tokenId,
-              quantity: type === "ERC721" ? 1n : 1n,
+              quantity: type === "ERC721" ? 1n : _qty,
               currencyContractAddress: currency?.tokenAddress,
               pricePerToken: value,
             });

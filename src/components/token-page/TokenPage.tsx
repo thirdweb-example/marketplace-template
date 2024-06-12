@@ -19,7 +19,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
+import { balanceOf, getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
 import {
   MediaRenderer,
@@ -67,6 +67,15 @@ export function Token(props: Props) {
     }
   );
 
+  const { data: ownedQuantity1155 } = useReadContract(balanceOf, {
+    contract: nftContract,
+    owner: account?.address!,
+    tokenId: tokenId,
+    queryOptions: {
+      enabled: !!account?.address && type === "ERC1155",
+    },
+  });
+
   const listings = (listingsInSelectedCollection || []).filter(
     (item) =>
       item.assetContractAddress.toLowerCase() ===
@@ -98,7 +107,7 @@ export function Token(props: Props) {
               src={nft?.metadata.image}
               style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
             />
-            <Accordion allowToggle allowMultiple defaultIndex={[0, 1]}>
+            <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
               {nft?.metadata.description && (
                 <AccordionItem>
                   <Text>
@@ -139,16 +148,31 @@ export function Token(props: Props) {
             <Text># {nft?.id.toString()}</Text>
             <Heading>{nft?.metadata.name}</Heading>
             <br />
-            <Text>Current owner</Text>
-            <Flex direction="row">
-              <Heading>
-                {nft?.owner ? shortenAddress(nft.owner) : "N/A"}{" "}
-              </Heading>
-              {ownedByYou && <Text color="gray">(You)</Text>}
-            </Flex>
-            {account && nft && ownedByYou && (
-              <CreateListing tokenId={nft?.id} account={account} />
+            {type === "ERC1155" ? (
+              <>
+                {account && ownedQuantity1155 && (
+                  <>
+                    <Text>You own</Text>
+                    <Heading>{ownedQuantity1155.toString()}</Heading>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Text>Current owner</Text>
+                <Flex direction="row">
+                  <Heading>
+                    {nft?.owner ? shortenAddress(nft.owner) : "N/A"}{" "}
+                  </Heading>
+                  {ownedByYou && <Text color="gray">(You)</Text>}
+                </Flex>
+              </>
             )}
+            {account &&
+              nft &&
+              (ownedByYou || (ownedQuantity1155 && ownedQuantity1155 > 0n)) && (
+                <CreateListing tokenId={nft?.id} account={account} />
+              )}
             <Accordion
               mt="30px"
               sx={{ container: {} }}
