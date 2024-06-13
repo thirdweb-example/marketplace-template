@@ -27,10 +27,12 @@ import {
   useDisconnect,
 } from "thirdweb/react";
 import type { Wallet } from "thirdweb/wallets";
+import { SideMenu } from "./SideMenu";
 
 export function Navbar() {
   const account = useActiveAccount();
   const wallet = useActiveWallet();
+  const { colorMode } = useColorMode();
   return (
     <Box py="30px" px={{ base: "20px", lg: "50px" }}>
       <Flex direction="row" justifyContent="space-between">
@@ -47,14 +49,19 @@ export function Navbar() {
             THIRDMART
           </Heading>
         </Box>
-        <Box>
+        <Box display={{ lg: "block", base: "none" }}>
           <ToggleThemeButton />
           {account && wallet ? (
             <ProfileButton address={account.address} wallet={wallet} />
           ) : (
-            <ConnectButton client={client} />
+            <ConnectButton
+              client={client}
+              theme={colorMode}
+              connectButton={{ style: { height: "56px" } }}
+            />
           )}
         </Box>
+        <SideMenu />
       </Flex>
     </Box>
   );
