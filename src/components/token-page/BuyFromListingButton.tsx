@@ -1,7 +1,7 @@
 import { client } from "@/consts/client";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { Button, useToast } from "@chakra-ui/react";
-import { sendTransaction, waitForReceipt } from "thirdweb";
+import { getContract, Hex, sendTransaction, waitForReceipt } from "thirdweb";
 import {
   buyFromListing,
   type DirectListing,
@@ -31,12 +31,46 @@ export default function BuyFromListingButton(props: Props) {
           await switchChain(nftContract.chain);
         }
         try {
+          if (
+            (listing.currencyContractAddress as string) !==
+            "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ) {
+            const customTokenContract = getContract({
+              address: listing.currencyContractAddress as string,
+              client,
+              chain: nftContract.chain,
+            });
+            const result = await allowance({
+              contract: customTokenContract,
+              owner: account.address,
+              spender: marketplaceContract.address as Hex,
+            });
+            console.log(result)
+            if (result < listing?.pricePerToken) {
+              const tx = approve({
+                contract: customTokenContract,
+                spender: marketplaceContract.address as Hex,
+                amount: toEther(listing?.pricePerToken),
+              });
+              const receiptApproval = await sendTransaction({
+                transaction: tx,
+                account,
+              });
+              await waitForReceipt({
+                transactionHash: receiptApproval.transactionHash,
+                client,
+                chain: nftContract.chain,
+              });
+            }
+          }
+
           const transaction = buyFromListing({
             contract: marketplaceContract,
             listingId: listing.id,
             quantity: listing.quantity,
             recipient: account.address,
           });
+          console.log(transaction);
           const receipt = await sendTransaction({
             transaction,
             account,
