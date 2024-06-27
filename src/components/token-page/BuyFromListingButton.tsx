@@ -45,7 +45,7 @@ export default function BuyFromListingButton(props: Props) {
               owner: account.address,
               spender: marketplaceContract.address as Hex,
             });
-            console.log(result)
+            
             if (result < listing?.pricePerToken) {
               const tx = approve({
                 contract: customTokenContract,
