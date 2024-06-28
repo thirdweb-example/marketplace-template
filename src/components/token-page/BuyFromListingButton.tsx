@@ -7,10 +7,10 @@ import {
 	getContract,
 	sendAndConfirmTransaction,
 	sendTransaction,
-	toEther,
+	toTokens,
 	waitForReceipt,
 } from "thirdweb";
-import { allowance, approve } from "thirdweb/extensions/erc20";
+import { allowance, approve, decimals } from "thirdweb/extensions/erc20";
 import {
 	type DirectListing,
 	buyFromListing,
@@ -56,10 +56,13 @@ export default function BuyFromListingButton(props: Props) {
 						});
 
 						if (result < listing?.pricePerToken) {
+							const _decimals = await decimals({
+								contract: customTokenContract,
+							});
 							const transaction = approve({
 								contract: customTokenContract,
 								spender: marketplaceContract.address as Hex,
-								amount: toEther(listing?.pricePerToken),
+								amount: toTokens(listing?.pricePerToken, _decimals),
 							});
 							await sendAndConfirmTransaction({ transaction, account });
 						}
