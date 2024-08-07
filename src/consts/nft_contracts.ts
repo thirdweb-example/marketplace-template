@@ -1,5 +1,5 @@
 import type { Chain } from "thirdweb";
-import { avalancheFuji, polygonAmoy } from "./chains";
+import { yourCustomChain, eth, bsc } from "./chains";
 
 export type NftContract = {
   address: string;
@@ -20,11 +20,11 @@ export type NftContract = {
  */
 export const NFT_CONTRACTS: NftContract[] = [
   {
-    address: "0x6b869a0cF84147f05a447636c42b8E53De65714E",
-    chain: avalancheFuji,
-    title: "Steakhouse: Liberatorz",
+    address: "0xe2Bc16894eeedE77915faA297047A08a5073C55C",
+    chain: yourCustomChain,
+    title: "Test Collection",
     thumbnailUrl:
-      "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeigonh3hde5suwcb3qvkh6ljtvxv7ubfmcqbwfvi3ihoi3igd27jwe/SteakhouseLogo.svg",
+      "https://d391b93f5f62d9c15f67142e43841acc.ipfscdn.io/ipfs/bafybeichanaklyw6ogjtxtnh4yums4bjflbzvlnnrtorlrl4gddrakpnia/download%20(16).png",
     type: "ERC721",
   },
   {
