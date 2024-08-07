@@ -1,11 +1,7 @@
-import { defineChain } from "thirdweb";
+// chain.ts
+import { defineChain, ethereum, bsc } from "thirdweb/chains";
 
-/**
- * All chains should be exported from this file
- */
-export { avalancheFuji, sepolia, polygonAmoy } from "thirdweb/chains";
+const yourChainId = 14333;
+const yourCustomChain = defineChain(yourChainId);
 
-/**
- * Define any custom chain using `defineChain`
- */
-export const example_customChain1 = defineChain(0.001); // don't actually use this
+export { ethereum, bsc, yourCustomChain }
