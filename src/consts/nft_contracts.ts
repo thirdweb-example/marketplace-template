@@ -5,7 +5,7 @@ export type NftContract = {
   address: string;
   chain: Chain;
   type: "ERC1155" | "ERC721";
-
+  thumbnailUrl: string;
   title?: string;
   description?: string;
   slug?: string;
