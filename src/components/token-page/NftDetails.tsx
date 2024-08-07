@@ -22,7 +22,7 @@ export function NftDetails(props: Props) {
   const contractUrl = `${
     nftContract.chain.blockExplorers
       ? nftContract.chain.blockExplorers[0]?.url
-      : ""
+      : "https://test-explorer.vitruveo.xyz/"
   }/address/${nftContract.address}`;
   const tokenUrl = `${
     nftContract.chain.blockExplorers
