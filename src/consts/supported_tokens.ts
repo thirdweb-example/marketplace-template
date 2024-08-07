@@ -1,5 +1,5 @@
 import type { Chain } from "thirdweb";
-import { avalancheFuji, polygonAmoy, sepolia } from "./chains";
+import { yourCustomChain } from "./chains";
 
 export type Token = {
   tokenAddress: string;
