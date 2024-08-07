@@ -22,12 +22,12 @@ export type SupportedTokens = {
  */
 export const SUPPORTED_TOKENS: SupportedTokens[] = [
   {
-    chain: avalancheFuji,
+    chain: yourCustomChain,
     tokens: [
       {
-        tokenAddress: "0x5425890298aed601595a70ab815c96711a31bc65",
-        symbol: "USDC",
-        icon: "/erc20-icons/usdc.png",
+        tokenAddress: "0x1DD5bbbcBfC87A4Bea4482f827C9842ac9D1D06F",
+        symbol: "TVTRU",
+        icon: "",
       },
       {
         tokenAddress: "0x82dcec6aa3c8bfe2c96d40d8805ee0da15708643",
