@@ -25,14 +25,9 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
     chain: yourCustomChain,
     tokens: [
       {
-        tokenAddress: "0x1DD5bbbcBfC87A4Bea4482f827C9842ac9D1D06F",
-        symbol: "TVTRU",
+        tokenAddress: "0x097019d6cd987F4b69da81cf59d0a0459396ad69",
+        symbol: "TUSDV",
         icon: "",
-      },
-      {
-        tokenAddress: "0x82dcec6aa3c8bfe2c96d40d8805ee0da15708643",
-        symbol: "USDT",
-        icon: "/erc20-icons/usdt.png",
       },
       // Add more ERC20 here...
     ],
