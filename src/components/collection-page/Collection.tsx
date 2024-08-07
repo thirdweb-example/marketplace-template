@@ -82,7 +82,7 @@ export function Collection() {
                   : ""}
               </Tab>
               {/* Support for English Auctions coming soon */}
-              {/* <Tab>Auctions ({allAuctions?.length || 0})</Tab> */}
+               <Tab>Auctions ({allAuctions?.length || 0})</Tab> 
             </TabList>
           </Tabs>
         </Flex>
