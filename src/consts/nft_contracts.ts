@@ -34,7 +34,7 @@ export const NFT_CONTRACTS: NftContract[] = [
     address:"0x72a7De5e5678126A1Cb42cC86052b00027D933ae",
     chain:yourCustomChain,
     title:"my collection",
-    type:ERC721",
+    type:"ERC721",
   },
  
  
