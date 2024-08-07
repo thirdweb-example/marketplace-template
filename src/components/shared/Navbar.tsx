@@ -46,7 +46,7 @@ export function Navbar() {
             fontWeight="extrabold"
           >
             {/* Replace this with your own branding */}
-            THIRDMART
+            TEST MARKET
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
