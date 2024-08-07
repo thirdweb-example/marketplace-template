@@ -37,38 +37,6 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
       // Add more ERC20 here...
     ],
   },
-
-  {
-    chain: polygonAmoy,
-    tokens: [
-      {
-        tokenAddress: "0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582",
-        symbol: "USDC",
-        icon: "/erc20-icons/usdc.png",
-      },
-      {
-        tokenAddress: "0xbcf39d8616d15fd146dd5db4a86b4f244a9bc772",
-        symbol: "USDT",
-        icon: "/erc20-icons/usdt.png",
-      },
-    ],
-  },
-
-  {
-    chain: sepolia,
-    tokens: [
-      {
-        tokenAddress: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-        symbol: "USDC",
-        icon: "/erc20-icons/usdc.png",
-      },
-      {
-        tokenAddress: "0x36160274b0ed3673e67f2ca5923560a7a0c523aa",
-        symbol: "USDT",
-        icon: "/erc20-icons/usdt.png",
-      },
-    ],
-  },
 ];
 
 export const NATIVE_TOKEN_ICON_MAP: { [key in Chain["id"]]: string } = {
