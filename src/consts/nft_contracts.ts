@@ -23,14 +23,14 @@ export const NFT_CONTRACTS: NftContract[] = [
     chain: yourCustomChain,
     title: "Test Collection",
     type: "ERC721",
-    thumbnailUrl: "https://d391b93f5f62d9c15f67142e43841acc.ipfscdn.io/ipfs/bafybeibi3tixmpxqmua2iq4mvf2cgb44nbrmxkfqmqq4bzbi2ujj23dywy/download%20(12).png",
+    thumbnailUrl: "",
   },
   {
     address:"0xccf0dF476C15f7e9e554d8d549cF8ccc34512afF",
     chain:yourCustomChain,
     title:"Random Collection",
     type:"ERC721",
-    thumbnailUrl:"https://d391b93f5f62d9c15f67142e43841acc.ipfscdn.io/ipfs/bafybeigjuhtnce4adh3srfqzbjxfeqqsm4p67ai25xszbztqkeen45h2rq/SFRIED_token.png",
+    thumbnailUrl:"",
   },
   {
     address:"0x72a7De5e5678126A1Cb42cC86052b00027D933ae",
