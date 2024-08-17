@@ -25,8 +25,8 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
     chain: yourCustomChain,
     tokens: [
       {
-        tokenAddress: "0x097019d6cd987F4b69da81cf59d0a0459396ad69",
-        symbol: "TUSDV",
+        tokenAddress: "0xbCfB3FCa16b12C7756CD6C24f1cC0AC0E38569CF",
+        symbol: "USDC.pol",
         icon: "",
       },
       // Add more ERC20 here...
