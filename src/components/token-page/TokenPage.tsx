@@ -222,11 +222,7 @@ export function Token(props: Props) {
                                     <Text>{item.quantity.toString()}</Text>
                                   </Td>
                                 )}
-                                <Td>
-                                  <Text>
-                                    {getExpiration(item.endTimeInSeconds)}
-                                  </Text>
-                                </Td>
+                              
                                 <Td px={1}>
                                   <Text>
                                     {item.creatorAddress.toLowerCase() ===
