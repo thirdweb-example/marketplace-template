@@ -23,7 +23,7 @@ export default function Home() {
           {/* Delete this <Card /> in your own app */}
          
           <Heading ml="20px" mt="40px">
-            Collections
+            Happenings Now
           </Heading>
           <Flex
             direction="row"
