@@ -41,12 +41,12 @@ export function Navbar() {
             as={Link}
             href="/"
             _hover={{ textDecoration: "none" }}
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgGradient="linear(to-l, #E6F8B2, #709176)"
             bgClip="text"
             fontWeight="extrabold"
           >
             {/* Replace this with your own branding */}
-            TEST MARKET
+            SF Gallery/Events Lobby
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
