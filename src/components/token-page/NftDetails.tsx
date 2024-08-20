@@ -22,12 +22,12 @@ export function NftDetails(props: Props) {
   const contractUrl = `${
     nftContract.chain.blockExplorers
       ? nftContract.chain.blockExplorers[0]?.url
-      : ""
+      : "https://explorer.vitruveo.xyz"
   }/address/${nftContract.address}`;
   const tokenUrl = `${
     nftContract.chain.blockExplorers
       ? nftContract.chain.blockExplorers[0]?.url
-      : ""
+      : "https://explorer.vitruveo.xyz"
   }/nft/${nftContract.address}/${nft.id.toString()}`;
   return (
     <AccordionItem>
@@ -58,7 +58,7 @@ export function NftDetails(props: Props) {
         </Flex>
         <Flex direction="row" justifyContent="space-between" mb="1">
           <Text>Chain</Text>
-          <Text>{nftContract.chain.name ?? "Unnamed chain"}</Text>
+          <Text>{nftContract.chain.name ?? "vitruveo"}</Text>
         </Flex>
       </AccordionPanel>
     </AccordionItem>
