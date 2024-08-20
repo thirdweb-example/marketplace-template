@@ -43,10 +43,10 @@ export function Navbar() {
             _hover={{ textDecoration: "none" }}
             bgGradient="linear(to-l, #F6CA83, #949D6A)"
             bgClip="text"
-            fontWeight="extrabold"
+            fontWeight="bold"
           >
             {/* Replace this with your own branding */}
-            SF Galleries & Events
+            ArtMart
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
