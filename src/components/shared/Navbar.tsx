@@ -46,7 +46,7 @@ export function Navbar() {
             fontWeight="bold"
           >
             {/* Replace this with your own branding */}
-            ArtMart
+            SFriedArt
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
