@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Lilita One
+- Font Author: Copyright (c) 2011 Juan Montoreano (juan@remolacha.biz), with Reserved Font Names "Lilita One"
+- Font Source: https://fonts.gstatic.com/s/lilitaone/v15/i7dPIFZ9Zz-WBtRtedDbUEZ2RFq7AwU.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
