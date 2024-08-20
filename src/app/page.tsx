@@ -23,8 +23,9 @@ export default function Home() {
           {/* Delete this <Card /> in your own app */}
           <Card border="1px" maxW="90vw" mx="auto">
             <CardHeader>
-              <Heading size="md">Happening Now</Heading>
+              <Heading size="md"></Heading>
             </CardHeader>
+            <image href = ""
           </Card>
           <Heading ml="20px" mt="40px">
           </Heading>
