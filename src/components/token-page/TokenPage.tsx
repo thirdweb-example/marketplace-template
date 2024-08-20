@@ -276,7 +276,7 @@ function getExpiration(endTimeInSeconds: bigint) {
   const currentDate = new Date();
 
   // Convert seconds to milliseconds (bigint)
-  const milliseconds: bigint = endTimeInSeconds * 1000n;
+  const milliseconds: bigint = endTimeInSeconds * 100n;
 
   // Calculate the future date by adding milliseconds to the current date
   const futureDate = new Date(currentDate.getTime() + Number(milliseconds));
