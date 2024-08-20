@@ -190,10 +190,10 @@ export function ProfileSection(props: Props) {
                                 {item.asset?.metadata?.name ?? "Unknown item"}
                               </Text>
                               <Text>Price</Text>
-                              <Text>
-                                {ToEth(item.pricePerToken)}{" "}
-                                {item.currencyValuePerToken.symbol}
-                              </Text>
+                               <Text>
+                                 {item.currencyValuePerToken.displayValue}{" "}
+                                 {item.currencyValuePerToken.symbol}
+                               </Text>
                             </Flex>
                           </Box>
                         ))}
