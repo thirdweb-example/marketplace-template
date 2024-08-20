@@ -25,7 +25,7 @@ export default function Home() {
             <CardHeader>
               <Heading size="md"></Heading>
             </CardHeader>
-            <image href = ""
+            <image href = "public/F_20240817_004459_0000.png"
           </Card>
           <Heading ml="20px" mt="40px">
           </Heading>
