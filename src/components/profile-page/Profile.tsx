@@ -102,7 +102,7 @@ export function ProfileSection(props: Props) {
           rounded="8px"
         />
         <Box my="auto">
-          <Heading>{ensName ?? "Unnamed"}</Heading>
+          <Heading>{ensName ?? ""}</Heading>
           <Text color="gray">{shortenAddress(address)}</Text>
         </Box>
       </Flex>
@@ -191,7 +191,7 @@ export function ProfileSection(props: Props) {
                               </Text>
                               <Text>Price</Text>
                               <Text>
-                                {toEther(item.pricePerToken)}{" "}
+                                {(item.pricePerToken)}{" "}
                                 {item.currencyValuePerToken.symbol}
                               </Text>
                             </Flex>
