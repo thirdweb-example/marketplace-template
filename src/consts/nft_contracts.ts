@@ -24,7 +24,7 @@ export const NFT_CONTRACTS: NftContract[] = [
     chain: vitruveo,
     title: "The National Fentanyl Awareness Day Charity 2024",
     thumbnailUrl:
-    "https://ipfs://QmWMV9k6GEDKxpWfoo6uRKTFq2Ho6yAMCL1jfmALfrtFer/F_20240817_004459_0000.png",
+    "",
     type: "ERC721",
   },
 ];
