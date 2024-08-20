@@ -191,7 +191,7 @@ export function ProfileSection(props: Props) {
                               </Text>
                               <Text>Price</Text>
                               <Text>
-                                {(item.pricePerToken)}{" "}
+                                {ToEth(item.pricePerToken)}{" "}
                                 {item.currencyValuePerToken.symbol}
                               </Text>
                             </Flex>
