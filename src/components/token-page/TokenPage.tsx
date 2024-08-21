@@ -18,6 +18,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { AspectRatio } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { balanceOf, getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
@@ -105,6 +106,7 @@ export function Token(props: Props) {
             <MediaRenderer
               client={client}
               src={nft?.metadata.image}
+              src={nft?.metadata.video}
               style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
             />
             <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
