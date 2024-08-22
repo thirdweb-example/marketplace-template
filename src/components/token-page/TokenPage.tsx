@@ -132,7 +132,7 @@ export function Token(props: Props) {
               <Heading>{contractMetadata?.name}</Heading>
               <Link,
               
-                href={/collection/${nftContract.chain.id}/${nftContract.address}}
+                href={collection/$nftContract.chain.id/${nftContract.address}}
               >
                 <FaExternalLinkAlt size={20} />
               </Link>
