@@ -128,7 +128,7 @@ export function Token(props: Props) {
           </Flex>
           <Box, w={ lg: "45vw", base: "90vw" }>
             <Text>Collection</Text>
-            <Flex, "row" "3">
+            <Flex, "row", 3>
               <Heading>{contractMetadata?.name}</Heading>
               <Link
                 color="gray"
