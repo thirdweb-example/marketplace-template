@@ -63,7 +63,7 @@ export function Token(props: Props) {
     {
       tokenId: BigInt(tokenId),
       contract: nftContract,
-      includeOwner: true,
+  
     }
   );
 
