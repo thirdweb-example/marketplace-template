@@ -1,10 +1,8 @@
 import { client } from "@/consts/client";
-import { SUPPORTED_TOKENS, Token } from "@/consts/supported_tokens";
 import { useMarketplaceContext } from "@/hooks/useMarketplaceContext";
 import { Button, useToast } from "@chakra-ui/react";
 import {
 	type Hex,
-	SUPPORTED_TOKEN_ADDRESS,
 	getContract,
 	sendAndConfirmTransaction,
 	sendTransaction,
