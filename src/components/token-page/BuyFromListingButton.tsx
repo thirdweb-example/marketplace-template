@@ -4,6 +4,7 @@ import { Button, useToast } from "@chakra-ui/react";
 import {
 	type Hex,
 	getContract,
+	NATIVE_TOKEN_ADDRESS,
 	sendAndConfirmTransaction,
 	sendTransaction,
 	toTokens,
