@@ -130,8 +130,8 @@ export function Token(props: Props) {
             <Text>Collection</Text>
             <Flex, "row", 3>
               <Heading>{contractMetadata?.name}</Heading>
-              <Link
-                color="gray"
+              <Link,
+              
                 href={`/collection/${nftContract.chain.id}/${nftContract.address}`}
               >
                 <FaExternalLinkAlt size={20} />
