@@ -95,22 +95,10 @@ export function Token(props: Props) {
     nft?.owner?.toLowerCase() === account?.address.toLowerCase();
 
   return (
-    <Flex direction="column">
-      <Box mt="24px" mx="auto">
-        <Flex
-          direction={{ lg: "row", base: "column" }}
-          justifyContent={{ lg: "center", base: "space-between" }}
-          gap={{ lg: 20, base: 5 }}
-        >
-           <Flex direction="column" w={{ lg: "45vw", base: "90vw" }} gap="5">
-            <MediaRenderer
-              client={client}
-              src ={nft?.metadata.video}
-              />
           <Flex direction="column" w={{ lg: "45vw", base: "90vw" }} gap="5">
             <MediaRenderer
               client={client}
-              src={nft?.metadata.image}
+              src={nft?.metadata.media}
              />
             <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
               {nft?.metadata.description && (
