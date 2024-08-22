@@ -18,7 +18,6 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { AspectRatio } from "@chakra-ui/react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { balanceOf, getNFT as getERC1155 } from "thirdweb/extensions/erc1155";
 import { getNFT as getERC721 } from "thirdweb/extensions/erc721";
@@ -95,14 +94,22 @@ export function Token(props: Props) {
     nft?.owner?.toLowerCase() === account?.address.toLowerCase();
 
   return (
+    <Flex direction="column">
+      <Box mt="24px" mx="auto">
+        <Flex
+          direction={{ lg: "row", base: "column" }}
+          justifyContent={{ lg: "center", base: "space-between" }}
+          gap={{ lg: 20, base: 5 }}
+        >
           <Flex direction="column" w={{ lg: "45vw", base: "90vw" }} gap="5">
             <MediaRenderer
               client={client}
-              src={nft?.metadata.media}
-             />
+              src={nft?.metadata.image}
+              style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
+            />
             <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
               {nft?.metadata.description && (
-                <AccordionItem> 
+                <AccordionItem>
                   <Text>
                     <AccordionButton>
                       <Box as="span" flex="1" textAlign="left">
@@ -126,15 +133,16 @@ export function Token(props: Props) {
               {nft && <NftDetails nft={nft} />}
             </Accordion>
           </Flex>
-          <Box, w={ lg: "45vw", base: "90vw" }>
+          <Box w={{ lg: "45vw", base: "90vw" }}>
             <Text>Collection</Text>
-            <Flex, "row", 3>
+            <Flex direction="row" gap="3">
               <Heading>{contractMetadata?.name}</Heading>
-              <Link,
-              
-                href={collection:$nftContract.chain.id,$nftContract:address}
+              <Link
+                color="gray"
+                href={`/collection/${nftContract.chain.id}/${nftContract.address}`}
               >
                 <FaExternalLinkAlt size={20} />
+              </Link>
             </Flex>
             <br />
             <Text># {nft?.id.toString()}</Text>
@@ -268,7 +276,7 @@ function getExpiration(endTimeInSeconds: bigint) {
   const currentDate = new Date();
 
   // Convert seconds to milliseconds (bigint)
-  const milliseconds: bigint = endTimeInSeconds * 10n;
+  const milliseconds: bigint = endTimeInSeconds * 1000n;
 
   // Calculate the future date by adding milliseconds to the current date
   const futureDate = new Date(currentDate.getTime() + Number(milliseconds));
@@ -283,4 +291,3 @@ function getExpiration(endTimeInSeconds: bigint) {
   };
   const formattedDate = futureDate.toLocaleDateString("en-US", options);
   return formattedDate;
-}
