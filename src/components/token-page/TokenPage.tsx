@@ -102,15 +102,19 @@ export function Token(props: Props) {
           justifyContent={{ lg: "center", base: "space-between" }}
           gap={{ lg: 20, base: 5 }}
         >
+           <Flex direction="column" w={{ lg: "45vw", base: "90vw" }} gap="5">
+            <MediaRenderer
+              client={client}
+              src ={nft?.metadata.video}
+              />
           <Flex direction="column" w={{ lg: "45vw", base: "90vw" }} gap="5">
             <MediaRenderer
               client={client}
               src={nft?.metadata.image}
-           
              />
             <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
               {nft?.metadata.description && (
-                <AccordionItem>
+                <AccordionItem> 
                   <Text>
                     <AccordionButton>
                       <Box as="span" flex="1" textAlign="left">
