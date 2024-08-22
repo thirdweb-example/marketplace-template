@@ -126,7 +126,7 @@ export function Token(props: Props) {
               {nft && <NftDetails nft={nft} />}
             </Accordion>
           </Flex>
-          <Box w={{ lg: "45vw", base: "90vw" }}>
+          <Box, w={{ lg: "45vw", base: "90vw" }}>
             <Text>Collection</Text>
             <Flex direction="row" gap="3">
               <Heading>{contractMetadata?.name}</Heading>
