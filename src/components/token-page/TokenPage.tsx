@@ -106,9 +106,10 @@ export function Token(props: Props) {
             <MediaRenderer
               client={client}
               src={nft?.metadata.image}
-              src={nft?.metadata.video}
-              style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
-            />
+             <video src="animated-nft?" autoplay loop muted class="animated-nft"></video>
+             style={{ width: "max-content", height: "auto", aspectRatio: "1" }}
+             <img src="still-image.jpg" alt="Still Image" class="still-image">
+             />
             <Accordion allowMultiple defaultIndex={[0, 1, 2]}>
               {nft?.metadata.description && (
                 <AccordionItem>
