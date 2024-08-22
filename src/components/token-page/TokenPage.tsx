@@ -135,7 +135,6 @@ export function Token(props: Props) {
                 href={collection:$nftContract.chain.id,$nftContract:address}
               >
                 <FaExternalLinkAlt size={20} />
-              </Link>
             </Flex>
             <br />
             <Text># {nft?.id.toString()}</Text>
