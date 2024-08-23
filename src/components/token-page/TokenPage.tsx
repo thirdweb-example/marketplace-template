@@ -35,10 +35,10 @@ import { NftDetails } from "./NftDetails";
 import RelatedListings from "./RelatedListings";
 
 const CancelListingButton = dynamic(() => import("./CancelListingButton"), {
-  ssr: false,
+  ssr: true,
 });
 const BuyFromListingButton = dynamic(() => import("./BuyFromListingButton"), {
-  ssr: false,
+  ssr: true,
 });
 
 type Props = {
