@@ -274,45 +274,16 @@ export function Token(props: Props) {
 import { prepareEvent } from "thirdweb";
 import { useContractEvents } from "thirdweb/react";
     
-const preparedEvent = prepareEvent({ 
-  contract, 
-  signature: "event BuyerApprovedForListing(uint256 indexed listingId, address indexed buyer, bool approved)" 
-});
-    
-export default function Component() {
-  const { data: event } = useContractEvents({ 
-    contract, 
-    events: [preparedEvent] 
-  });
-}
-const transaction = await prepareContractCall({ 
-  contract, 
-  method: "function approveBuyerForListing(uint256 _listingId, address _buyer, bool _toApprove)", 
-  params: [_listingId, _buyer, _toApprove] 
-});
-const { transactionHash } = await sendTransaction({ 
-  transaction, 
-  account 
-});
-const transaction = await prepareContractCall({ 
-  contract, 
-  method: "function approveCurrencyForListing(uint256 _listingId, address _currency, uint256 _pricePerTokenInCurrency)", 
-  params: [_listingId, _currency, _pricePerTokenInCurrency] 
-});
-const { transactionHash } = await sendTransaction({ 
-  transaction, 
-  account 
-});
-const transaction = await prepareContractCall({ 
-  contract, 
-  method: "function buyFromListing(uint256 _listingId, address _buyFor, uint256 _quantity, address _currency, uint256 _expectedTotalPrice) payable", 
-  params: [_listingId, _buyFor, _quantity, _currency, _expectedTotalPrice] 
-});
-const { transactionHash } = await sendTransaction({ 
-  transaction, 
-  account 
-});
 
+  const onClick = () => {
+    const transaction = prepareContractCall({ 
+      contract, 
+      method: "function buyFromListing(uint256 _listingId, address _buyFor, uint256 _quantity, address _currency, uint256 _expectedTotalPrice) payable", 
+      params: [_listingId, _buyFor, _quantity, _currency, _expectedTotalPrice] 
+    });
+    sendTransaction(transaction);
+  }
+};
 function getExpiration(endTimeInSeconds: bigint) {
   // Get the current date and time
   const currentDate = new Date();
