@@ -282,8 +282,7 @@ import { useContractEvents } from "thirdweb/react";
       params: [_listingId, _buyFor, _quantity, _currency, _expectedTotalPrice] 
     });
     sendTransaction(transaction);
-  }
-};
+  };
 function getExpiration(endTimeInSeconds: bigint) {
   // Get the current date and time
   const currentDate = new Date();
