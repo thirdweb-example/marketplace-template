@@ -72,4 +72,10 @@ export const NFT_CONTRACTS: NftContract[] = [
       "https://258c828e8cc853bf5e0efd001055fb39.ipfscdn.io/ipfs/bafybeif2nz6wbwuryijk2c4ayypocibexdeirlvmciqjyvlzz46mzoirtm/0.png",
     type: "ERC1155",
   },
+  {
+    address: "0xF3e1b21f0C43d85f657338AEf13aa0F7f8565452",
+    chain: polygonAmoy,
+    thumbnailUrl: "0xF3e1b21f0C43d85f657338AEf13aa0F7f8565452",
+    type: "ERC1155",
+  },
 ];

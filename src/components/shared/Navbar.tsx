@@ -22,6 +22,7 @@ import { FiUser } from "react-icons/fi";
 import { IoSunny } from "react-icons/io5";
 import {
   ConnectButton,
+  PayEmbed,
   useActiveAccount,
   useActiveWallet,
   useDisconnect,
@@ -41,12 +42,11 @@ export function Navbar() {
             as={Link}
             href="/"
             _hover={{ textDecoration: "none" }}
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
-            bgClip="text"
+            // bgGradient="linear(to-l, #7928CA, #FF0080)"
+            // bgClip="text"
             fontWeight="extrabold"
           >
-            {/* Replace this with your own branding */}
-            THIRDMART
+            AUCTIONADOS
           </Heading>
         </Box>
         <Box display={{ lg: "block", base: "none" }}>
@@ -63,6 +63,7 @@ export function Navbar() {
         </Box>
         <SideMenu />
       </Flex>
+      <PayEmbed client={client} />
     </Box>
   );
 }

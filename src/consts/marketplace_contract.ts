@@ -16,7 +16,7 @@ export const MARKETPLACE_CONTRACTS: MarketplaceContract[] = [
     chain: avalancheFuji,
   },
   {
-    address: "0x571B773F1e4A7C080b51C36f37e06f371C515569",
+    address: "0xAD9Cd3Fcb23b918e19726b0Df7078e46e5FF81b8",
     chain: polygonAmoy,
   },
   {

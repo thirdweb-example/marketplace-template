@@ -47,9 +47,15 @@ export const SUPPORTED_TOKENS: SupportedTokens[] = [
         icon: "/erc20-icons/usdc.png",
       },
       {
+      
         tokenAddress: "0xbcf39d8616d15fd146dd5db4a86b4f244a9bc772",
         symbol: "USDT",
         icon: "/erc20-icons/usdt.png",
+      },
+      {
+        tokenAddress: "0xBdFB433cBC0982d1A87712832876f08c67814930",
+        symbol: "LIFTO",
+        icon: "/erc20-icons/lifto.png",
       },
     ],
   },
