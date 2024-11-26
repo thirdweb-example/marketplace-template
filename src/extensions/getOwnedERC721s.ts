@@ -34,23 +34,10 @@ export async function getOwnedERC721s(
 	options: BaseTransactionOptions<GetERC721sParams>,
 ): Promise<NFT[]> {
 	const { contract, owner, requestPerSec } = options;
-
-	const [is721, has_tokenOfOwnerByIndex] = await Promise.all([
-		isERC721({ contract }),
-		detectMethod({
-			method:
-				"function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
-			contract,
-		}),
-	]);
+    const is721 = await isERC721({ contract });
 
 	if (!is721) {
 		throw new Error("Contract is not an ERC721 contract");
-	}
-
-	if (has_tokenOfOwnerByIndex) {
-		const { getOwnedNFTs } = await import("thirdweb/extensions/erc721");
-		return getOwnedNFTs(options);
 	}
 
 	const { nextTokenIdToMint, startTokenId, totalSupply, ownerOf, getNFT } =
