@@ -22,7 +22,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "thirdweb": "^5.28.0"
+    "thirdweb": "^5.75.0"
   },
   "devDependencies": {
     "@types/node": "^20",
