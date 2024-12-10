@@ -1,6 +1,7 @@
 import { ADDRESS_ZERO, type NFT, type BaseTransactionOptions } from "thirdweb";
 import { isERC721 } from "thirdweb/extensions/erc721";
-import { detectMethod } from "thirdweb/utils";
+import { detectMethod, toFunctionSelector } from "thirdweb/utils";
+import { resolveContractAbi } from "thirdweb/contract"
 
 export type GetERC721sParams = {
 	owner: string;
@@ -34,14 +35,18 @@ export async function getOwnedERC721s(
 	options: BaseTransactionOptions<GetERC721sParams>,
 ): Promise<NFT[]> {
 	const { contract, owner, requestPerSec } = options;
+	const abi = await resolveContractAbi(contract);
+
+	// @ts-ignore
+	const selectors = abi.filter((f) => f.type === "function").map((f) => toFunctionSelector(f));
 
 	const [is721, has_tokenOfOwnerByIndex] = await Promise.all([
 		isERC721({ contract }),
 		detectMethod({
-			method:
-				"function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
-			contract,
-		}),
+			method: "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
+			availableSelectors: selectors,
+		})
+
 	]);
 
 	if (!is721) {
